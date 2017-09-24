@@ -9,6 +9,7 @@ const fs = require('fs');
 const mkdirp = require('mkdirp');
 const program = require('commander');
 const request = require('request');
+const veres = require('./lib/driver-veres');
 const URL = require('url');
 const config = {};
 
@@ -20,7 +21,7 @@ program;
 // setup the command line
 program
   .usage('command [options]' )
-  .description('A program to manage Decentralized Identifiers (DIDs')
+  .description('A program to manage Decentralized Identifiers (DIDs)')
   .on('--help', function(){
     console.log('\n   Examples:');
     console.log('    $ did create');
@@ -29,41 +30,47 @@ program
     console.log('    $ did auth-remove -d 1234');
     console.log('');
   })
-  .option('-l, --ledger', 'The DID ledger to use [default: Veres One]')
+  .option('-l, --ledger', 'The DID ledger to use [default: veres]',
+    /^(veres|sovrin|btcr|uport|consensys)$/i, 'veres')
   .option('-v, --verbose', 'Verbose output')
   .version('0.1.0');
 
 // create a DID
 program
   .command('create')
-  .description('Creates a DID')
+  .description('Create a DID')
   .option('-d, --did', 'The DID to create')
-  .action(function(cmd, options) {
-    console.log('Not implemented yet');
+  .action(cmd => {
+    if(program.ledger === 'veres') {
+      veres.create(program);
+    } else {
+      console.error('Could not create DID, unknown ledger:', program.ledger);
+    }
   });
 
 // add an authentication key to a DID Document
 program
-  .command('auth-add')
+  .command('authn-add')
   .description('Add an authentication key to a DID')
   .option('-d, --did', 'The DID to manage')
-  .action(function(cmd, options) {
+  .action(cmd => {
     console.log('Not implemented yet');
   });
 
 // rotate an authentication key for a DID document
 program
-  .command('auth-add')
-  .description('Add an authentication key to a DID')
+  .command('authn-rotate')
+  .description('Rotate an existing authentication key for a DID')
   .option('-d, --did', 'The DID to manage')
-  .action(function(cmd, options) {
+  .option('-o, --old-key', 'The old key identifier to rotate out')
+  .action(cmd => {
     console.log('Not implemented yet');
   });
 
 // catch all for unknown command
 program
   .command('*', 'Unknown command catch-all', {noHelp:true})
-  .action(function(env){
+  .action(cmd => {
     console.log('Error: Unknown command');
     program.help();
   });
