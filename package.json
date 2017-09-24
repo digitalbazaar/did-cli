@@ -20,6 +20,7 @@
     "async": "^2.5.0",
     "commander": "^2.11.0",
     "mkdirp": "^0.5.1",
+    "node-forge": "^0.7.1",
     "program": "^1.0.0",
     "request": "^2.82.0",
     "uuid": "^3.0.1"
