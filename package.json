@@ -1,6 +1,6 @@
 {
   "name": "did-client",
-  "version": "0.0.1-0",
+  "version": "0.1.0-0",
   "description": "A program for managing Decentralized Identifiers (DIDs).",
   "main": "./did",
   "repository": {
@@ -19,6 +19,7 @@
   "dependencies": {
     "async": "^2.5.0",
     "commander": "^2.11.0",
+    "mkdirp": "^0.5.1",
     "program": "^1.0.0",
     "request": "^2.82.0",
     "uuid": "^3.0.1"
