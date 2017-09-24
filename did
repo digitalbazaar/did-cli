@@ -30,7 +30,8 @@ program
     console.log('    $ did auth-remove -d 1234');
     console.log('');
   })
-  .option('-l, --ledger', 'The DID ledger to use [default: veres]',
+  .option('-d, --did [did]', 'The DID to manage')
+  .option('-l, --ledger [ledger]', 'The DID ledger to use [veres]',
     /^(veres|sovrin|btcr|uport|consensys)$/i, 'veres')
   .option('-v, --verbose', 'Verbose output')
   .version('0.1.0');
@@ -38,63 +39,49 @@ program
 // create a DID
 program
   .command('create')
-  .description('Create a DID')
-  .option('-d, --did', 'The DID to create')
-  .action(cmd => {
-    if(program.ledger === 'veres') {
-      veres.create(program);
-    } else {
-      console.error('Could not create DID, unknown ledger:', program.ledger);
-    }
-  });
+  .description('Create a DID');
 
 // add an authentication key to a DID Document
 program
   .command('authn-add')
   .description('Add an authentication key to a DID')
-  .option('-d, --did', 'The DID to manage')
-  .action(cmd => {
-    console.log('Not implemented yet');
-  });
+  .option('-d, --did', 'The DID to manage');
 
 // rotate an authentication key for a DID document
 program
   .command('authn-rotate')
-  .description('Rotate an existing authentication key for a DID')
+  .description('Rotate an existing DID authentication key')
   .option('-d, --did', 'The DID to manage')
-  .option('-o, --old-key', 'The old key identifier to rotate out')
-  .action(cmd => {
-    console.log('Not implemented yet');
-  });
+  .option('-o, --old-key', 'The old key identifier to rotate out');
 
 // add an authorization to a DID Document
 program
   .command('authz-add')
   .description('Add an authorization to a DID Document')
-  .option('-d, --did', 'The DID to manage')
-  .action(cmd => {
-    console.log('Not implemented yet');
-  });
+  .option('-d, --did', 'The DID to manage');
 
 // remove an authorization from a DID Document
 program
   .command('authz-remove')
   .description('Remove an authorization from a DID Document')
-  .option('-d, --did', 'The DID to manage')
-  .action(cmd => {
-    console.log('Not implemented yet');
-  });
-
-// catch all for unknown command
-program
-  .command('*', 'Unknown command catch-all', {noHelp:true})
-  .action(cmd => {
-    console.log('Error: Unknown command');
-    program.help();
-  });
+  .option('-d, --did', 'The DID to manage');
 
 program.parse(process.argv);
 
 if(!process.argv.slice(2).length) {
+}
+
+const command = program.args[0];
+
+if(command === 'create') {
+  if(program.ledger === 'veres') {
+    veres.create(program);
+  } else {
+    console.error('Error:', program.ledger, 'ledger not supported yet');
+  }
+} else if(['authn-add'].indexOf(command) !== -1) {
+  console.error('Error:', command, 'not implemented');
+} else {
+  console.error('Error: Unknown command', command);
   program.outputHelp();
 }
