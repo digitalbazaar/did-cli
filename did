@@ -1,0 +1,57 @@
+#!/usr/bin/env nodejs
+/**
+ * A Decentralized Identifier client for managing DIDs.
+ *
+ * Copyright (c) 2017 Digital Bazaar, Inc. All rights reserved.
+ */
+const async = require('async');
+const fs = require('fs');
+const mkdirp = require('mkdirp');
+const program = require('commander');
+const request = require('request');
+const URL = require('url');
+const config = {};
+
+const DID_SERVICE = config.username || 'https://testnet.veres.one/dids';
+
+// add help output
+program;
+
+// setup the command line
+program
+  .usage('command [options]' )
+  .description('A program to manage Decentralized Identifiers (DIDs')
+  .on('--help', function(){
+    console.log('\n   Examples:');
+    console.log('    $ did create');
+    console.log('    $ did auth-add -d 1234');
+    console.log('    $ did auth-rotate -d 1234');
+    console.log('    $ did auth-remove -d 1234');
+    console.log('');
+  })
+  .option('-l, --ledger', 'The DID ledger to use [default: Veres One]')
+  .option('-v, --verbose', 'Verbose output')
+  .version('0.1.0');
+
+// create a DID
+program
+  .command('create')
+  .description('Creates a DID')
+  .option('-d, --did', 'The DID to create')
+  .action(function(cmd, options) {
+    console.log('Not implemented yet');
+  });
+
+// catch all for unknown command
+program
+  .command('*', 'Unknown command catch-all', {noHelp:true})
+  .action(function(env){
+    console.log('Error: Unknown command');
+    program.help();
+  });
+
+program.parse(process.argv);
+
+if(!process.argv.slice(2).length) {
+  program.outputHelp();
+}
