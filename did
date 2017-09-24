@@ -67,6 +67,24 @@ program
     console.log('Not implemented yet');
   });
 
+// add an authorization to a DID Document
+program
+  .command('authz-add')
+  .description('Add an authorization to a DID Document')
+  .option('-d, --did', 'The DID to manage')
+  .action(cmd => {
+    console.log('Not implemented yet');
+  });
+
+// remove an authorization from a DID Document
+program
+  .command('authz-remove')
+  .description('Remove an authorization from a DID Document')
+  .option('-d, --did', 'The DID to manage')
+  .action(cmd => {
+    console.log('Not implemented yet');
+  });
+
 // catch all for unknown command
 program
   .command('*', 'Unknown command catch-all', {noHelp:true})
