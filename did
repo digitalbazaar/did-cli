@@ -42,6 +42,15 @@ program
     console.log('Not implemented yet');
   });
 
+// add an authentication key to a DID Document
+program
+  .command('auth-add')
+  .description('Add an authentication key to a DID')
+  .option('-d, --did', 'The DID to manage')
+  .action(function(cmd, options) {
+    console.log('Not implemented yet');
+  });
+
 // catch all for unknown command
 program
   .command('*', 'Unknown command catch-all', {noHelp:true})
