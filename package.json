@@ -18,7 +18,10 @@
   "homepage": "https://github.com/digitalbazaar/did-client/",
   "dependencies": {
     "async": "^2.5.0",
+    "bedrock": "digitalbazaar/bedrock#jsonld-1.1",
     "commander": "^2.11.0",
+    "equihash-signature": "digitalbazaar/equihash-signature#wip",
+    "jsonld-signatures": "digitalbazaar/jsonld-signatures#authenticationCredential",
     "mkdirp": "^0.5.1",
     "node-forge": "^0.7.1",
     "program": "^1.0.0",

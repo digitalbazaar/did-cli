@@ -84,7 +84,8 @@ if(command === 'create') {
   } else {
     console.error('Error:', program.ledger, 'ledger not supported yet');
   }
-} else if(['authn-add'].indexOf(command) !== -1) {
+} else if(['get', 'authn-add', 'authn-rotate', 'authz-add', 'authz-remove']
+  .indexOf(command) !== -1) {
   console.error('Error:', command, 'not implemented');
 } else {
   console.error('Error: Unknown command', command);
