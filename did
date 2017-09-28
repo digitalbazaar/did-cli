@@ -84,6 +84,12 @@ if(command === 'create') {
   } else {
     console.error('Error:', program.ledger, 'ledger not supported yet');
   }
+} else if(command === 'get') {
+  if(program.ledger === 'veres') {
+    veres.get(program);
+  } else {
+    console.error('Error:', program.ledger, 'ledger not supported yet');
+  }
 } else if(['get', 'authn-add', 'authn-rotate', 'authz-add', 'authz-remove']
   .indexOf(command) !== -1) {
   console.error('Error:', command, 'not implemented');
