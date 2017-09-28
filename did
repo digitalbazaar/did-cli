@@ -1,26 +1,20 @@
-#!/usr/bin/env nodejs
+#!/usr/bin/env node
 /**
  * A Decentralized Identifier client for managing DIDs.
  *
  * Copyright (c) 2017 Digital Bazaar, Inc. All rights reserved.
  */
-const async = require('async');
-const fs = require('fs');
-const mkdirp = require('mkdirp');
 const program = require('commander');
-const request = require('request');
 const veres = require('./lib/driver-veres');
-const URL = require('url');
-const config = {};
 
 // add help output
 program;
 
 // setup the command line
 program
-  .usage('command [options]' )
+  .usage('command [options]')
   .description('A program to manage Decentralized Identifiers (DIDs)')
-  .on('--help', function(){
+  .on('--help', () => {
     console.log('\n   Examples:');
     console.log('    $ did create');
     console.log('    $ did auth-add -d 1234');
