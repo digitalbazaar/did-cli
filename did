@@ -13,8 +13,6 @@ const veres = require('./lib/driver-veres');
 const URL = require('url');
 const config = {};
 
-const DID_SERVICE = config.username || 'https://testnet.veres.one/dids';
-
 // add help output
 program;
 
@@ -31,6 +29,7 @@ program
     console.log('');
   })
   .option('-d, --did [did]', 'The DID to manage')
+  .option('-m, --mode [mode]', 'Mode of operation [testnet]')
   .option('-l, --ledger [ledger]', 'The DID ledger to use [veres]',
     /^(veres|sovrin|btcr|uport|consensys)$/i, 'veres')
   .option('-v, --verbose', 'Verbose output')
