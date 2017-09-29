@@ -1,6 +1,8 @@
 # did-client
 A client for managing Decentralized Identifiers.
 
+## Quickstart
+
 The current client supports the creation of Testnet DIDs on the Veres One
 ledger as well as the retrieval of those DIDs from the Testnet. You can
 try the tool out by doing the following commands on a system that has
@@ -22,8 +24,18 @@ command:
 
     ./did get <DID>
 
+## Requirements
+
+* Linux OS
+* C++ toolchain used to build native Equihash binaries
+* Node.js >= 6
+* npm >= 3
+
+## Roadmap
+
 There are plans to support the following other commands and features:
 
+  * Build support for macOS/OS X
   * Adding, rotating, and removing authentication credentials
   * Adding and removing authorization capability descriptions
   * Adding and removing service descriptions
