@@ -1,5 +1,6 @@
 # did-client
-A client for managing Decentralized Identifiers.
+
+A command-line client for managing Decentralized Identifiers.
 
 ## Quickstart
 
@@ -11,6 +12,21 @@ node.js and a C++ compiler installed:
     npm install did-client
     cd node_modules/did-client
     ./did create
+    
+To retrieve the freshly created DID:
+
+    ./did get <DID>
+
+## Requirements
+
+* Linux
+  * g++ to build native Equihash binaries
+* Mac OS X
+  * X Code 9 to build native Equihash binaries
+* Node.js >= 6.x
+* npm >= 3.x
+
+## Developing
 
 To download the source and install the client:
 
@@ -24,18 +40,10 @@ command:
 
     ./did get <DID>
 
-## Requirements
-
-* Linux OS
-* C++ toolchain used to build native Equihash binaries
-* Node.js >= 6
-* npm >= 3
-
 ## Roadmap
 
 There are plans to support the following other commands and features:
 
-  * Build support for macOS/OS X
   * Adding, rotating, and removing authentication credentials
   * Adding and removing authorization capability descriptions
   * Adding and removing service descriptions
