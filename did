@@ -7,6 +7,9 @@
 const program = require('commander');
 const veres = require('./lib/driver-veres');
 
+const didMethods = {
+  veres: veres}
+
 // add help output
 program;
 
@@ -71,23 +74,19 @@ if(!process.argv.slice(2).length) {
 }
 
 const command = program.args[0];
+// @@: Maybe allow ledgers to add their own commands as well?
+const supportedCommands = ['create', 'get', 'authn-add', 'authn-rotate',
+                           'authz-add', 'authz-remove']
+const didMethod = didMethods[program.ledger];
+console.log(didMethod);
 
-if(command === 'create') {
-  if(program.ledger === 'veres') {
-    veres.create(program);
-  } else {
-    console.error('Error:', program.ledger, 'ledger not supported yet');
-  }
-} else if(command === 'get') {
-  if(program.ledger === 'veres') {
-    veres.get(program);
-  } else {
-    console.error('Error:', program.ledger, 'ledger not supported yet');
-  }
-} else if(['get', 'authn-add', 'authn-rotate', 'authz-add', 'authz-remove']
-  .indexOf(command) !== -1) {
-  console.error('Error:', command, 'not implemented');
-} else {
+if (didMethod == undefined) {
+  console.error('Error:', program.ledger, 'ledger not supported yet');
+} else if (supportedCommands.indexOf(command) == -1) {
   console.error('Error: Unknown command', command);
   program.outputHelp();
+} else if (didMethod[command] == undefined) {
+  console.error('Error:', command, 'not implemented');
+} else {
+  didMethod[command](program);
 }
