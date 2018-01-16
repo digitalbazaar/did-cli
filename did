@@ -26,9 +26,9 @@ program
     console.log('');
   })
   .option('-d, --did [did]', 'The DID to manage')
-  .option('-m, --mode [mode]', 'Mode of operation [testnet]',
+  .option('-m, --mode [mode]', 'Mode of operation',
     /^(live|testnet|dev)$/i, 'testnet')
-  .option('-l, --ledger [ledger]', 'The DID ledger to use [veres]',
+  .option('-l, --ledger [ledger]', 'The DID ledger to use',
     /^(veres|sovrin|btcr|uport|consensys)$/i, 'veres')
   .option('-v, --verbose', 'Verbose output')
   .version('0.1.0');
