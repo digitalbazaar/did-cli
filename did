@@ -74,7 +74,7 @@ if(!process.argv.slice(2).length) {
 }
 
 const command = program.args[0];
-// @@: Maybe allow ledgers to add their own commands as well?
+// TODO: Maybe allow ledgers to add their own commands as well?
 const supportedCommands = ['create', 'get', 'authn-add', 'authn-rotate',
                            'authz-add', 'authz-remove']
 const didMethod = didMethods[program.ledger];
