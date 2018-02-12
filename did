@@ -5,13 +5,7 @@
  * Copyright (c) 2017 Digital Bazaar, Inc. All rights reserved.
  */
 const program = require('commander');
-const veres = require('./lib/driver-veres');
-
-const didMethods = {
-  veres: veres}
-
-// add help output
-program;
+const didMethods = require('./lib/methods');
 
 // setup the command line
 program
@@ -20,9 +14,9 @@ program
   .on('--help', () => {
     console.log('\n   Examples:');
     console.log('    $ did create');
-    console.log('    $ did auth-add -d 1234');
-    console.log('    $ did auth-rotate -d 1234');
-    console.log('    $ did auth-remove -d 1234');
+    console.log('    $ did authn-add -d 1234');
+    console.log('    $ did authn-rotate -d 1234');
+    console.log('    $ did authn-remove -d 1234');
     console.log('');
   })
   .option('-d, --did [did]', 'The DID to manage')
@@ -36,57 +30,62 @@ program
 // create a DID
 program
   .command('create')
-  .description('Create a DID');
+  .description('Create a DID')
+  .action(_runLedgerCommand);
 
 // get an existing DID Document
 program
   .command('get')
-  .description('Retrieves an existing DID Document');
+  .description('Retrieves an existing DID Document')
+  .action(_runLedgerCommand);
 
 // add an authentication key to a DID Document
 program
   .command('authn-add')
   .description('Add an authentication key to a DID')
-  .option('-d, --did', 'The DID to manage');
+  .option('-d, --did', 'The DID to manage')
+  .action(_runLedgerCommand);
 
 // rotate an authentication key for a DID document
 program
   .command('authn-rotate')
   .description('Rotate an existing DID authentication key')
   .option('-d, --did', 'The DID to manage')
-  .option('-o, --old-key', 'The old key identifier to rotate out');
+  .option('-o, --old-key', 'The old key identifier to rotate out')
+  .action(_runLedgerCommand);
 
+// TODO: remove `authz` commands, now capability based
 // add an authorization to a DID Document
 program
   .command('authz-add')
   .description('Add an authorization to a DID Document')
-  .option('-d, --did', 'The DID to manage');
+  .option('-d, --did', 'The DID to manage')
+  .action(_runLedgerCommand);
 
 // remove an authorization from a DID Document
 program
   .command('authz-remove')
   .description('Remove an authorization from a DID Document')
-  .option('-d, --did', 'The DID to manage');
+  .option('-d, --did', 'The DID to manage')
+  .action(_runLedgerCommand);
 
 program.parse(process.argv);
-
-if(!process.argv.slice(2).length) {
+if(!program.args.length < 1) {
+  program.help();
+  process.exit(0);
 }
 
-const command = program.args[0];
-// TODO: Maybe allow ledgers to add their own commands as well?
-const supportedCommands = ['create', 'get', 'authn-add', 'authn-rotate',
-                           'authz-add', 'authz-remove']
-const didMethod = didMethods[program.ledger];
-console.log(didMethod);
-
-if (didMethod == undefined) {
-  console.error('Error:', program.ledger, 'ledger not supported yet');
-} else if (supportedCommands.indexOf(command) == -1) {
-  console.error('Error: Unknown command', command);
-  program.outputHelp();
-} else if (didMethod[command] == undefined) {
-  console.error('Error:', command, 'not implemented');
-} else {
-  didMethod[command](program);
+function _runLedgerCommand() {
+  const command = program.args[0];
+  const didMethod = didMethods[program.ledger];
+  if(!didMethod) {
+    throw new Error(`"${program.ledger}" ledger not supported yet`);
+  }
+  console.log(program.ledger);
+  const api = didMethod[command];
+  if(!api) {
+    throw new Error(`"${command}" not implemented`);
+  }
+  console.log(command);
+  api(program);
 }

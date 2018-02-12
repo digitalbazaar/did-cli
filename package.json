@@ -19,6 +19,8 @@
   "dependencies": {
     "async": "^2.5.0",
     "commander": "^2.11.0",
+    "did-veres-one": "veres-one/did-veres-one#implementation",
+    "did-client-veres-one": "veres-one/did-veres-one#implementation",
     "equihash-signature": "digitalbazaar/equihash-signature#removeBedrock",
     "jsonld": "^0.5.0",
     "jsonld-signatures": "digitalbazaar/jsonld-signatures#master",
