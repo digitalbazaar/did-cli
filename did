@@ -69,6 +69,10 @@ program
   .option('-d, --DID', 'The DID of the object capability to revoke')
   .action(_runLedgerCommand);
 
+process.on('unhandledRejection', error => {
+  console.error(error);
+});
+
 program.parse(process.argv);
 if(program.args.length < 1) {
   program.help();
@@ -88,7 +92,6 @@ function _runLedgerCommand() {
     if(!api) {
       throw new Error(`"${command}" not implemented`);
     }
-    console.log(command);
     api(program);
   } catch(e) {
     console.error(e);
