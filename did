@@ -5,7 +5,7 @@
  * Copyright (c) 2017 Digital Bazaar, Inc. All rights reserved.
  */
 const program = require('commander');
-const didMethods = require('./lib/methods');
+const drivers = require('./lib');
 
 // setup the command line
 program
@@ -21,7 +21,7 @@ program
   })
   .option('-d, --did [did]', 'The DID to manage')
   .option('-m, --mode [mode]', 'Mode of operation',
-    /^(live|testnet|dev)$/i, 'testnet')
+    /^(live|test|dev)$/i, 'test')
   .option('-l, --ledger [ledger]', 'The DID ledger to use',
     /^(veres|sovrin|btcr|uport|consensys)$/i, 'veres')
   .option('-v, --verbose', 'Verbose output')
@@ -54,38 +54,43 @@ program
   .option('-o, --old-key', 'The old key identifier to rotate out')
   .action(_runLedgerCommand);
 
-// TODO: remove `authz` commands, now capability based
-// add an authorization to a DID Document
+// add an object capability DID Document
 program
-  .command('authz-add')
-  .description('Add an authorization to a DID Document')
-  .option('-d, --did', 'The DID to manage')
+  .command('ocap-add')
+  .description('Add an object capability DID Document')
+  .option('-d, --DID', 'The DID of the invocation target')
+  .option('-i, --invoker', 'The DID of the invoker')
   .action(_runLedgerCommand);
 
-// remove an authorization from a DID Document
+// revoke an object capability DID Document
 program
-  .command('authz-remove')
-  .description('Remove an authorization from a DID Document')
-  .option('-d, --did', 'The DID to manage')
+  .command('ocap-revoke')
+  .description('Remove an object capability DID Document')
+  .option('-d, --DID', 'The DID of the object capability to revoke')
   .action(_runLedgerCommand);
 
 program.parse(process.argv);
-if(!program.args.length < 1) {
+if(program.args.length < 1) {
   program.help();
   process.exit(0);
 }
 
 function _runLedgerCommand() {
-  const command = program.args[0];
-  const didMethod = didMethods[program.ledger];
-  if(!didMethod) {
-    throw new Error(`"${program.ledger}" ledger not supported yet`);
+  try {
+    const command = program.args[0]._name;
+    const driver = drivers[program.ledger];
+    if(!driver) {
+      throw new Error(`"${program.ledger}" ledger not supported yet`);
+    }
+    console.log(
+      `Executing "${command}" using ledger "${program.ledger}"...`);
+    const api = driver[command];
+    if(!api) {
+      throw new Error(`"${command}" not implemented`);
+    }
+    console.log(command);
+    api(program);
+  } catch(e) {
+    console.error(e);
   }
-  console.log(program.ledger);
-  const api = didMethod[command];
-  if(!api) {
-    throw new Error(`"${command}" not implemented`);
-  }
-  console.log(command);
-  api(program);
 }
