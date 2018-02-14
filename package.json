@@ -23,7 +23,7 @@
     "equihash-signature": "digitalbazaar/equihash-signature#removeBedrock",
     "fs-extra": "^5.0.0",
     "jsonld": "^0.5.0",
-    "jsonld-signatures": "digitalbazaar/jsonld-signatures#master",
+    "jsonld-signatures": "^2.0.0",
     "lodash": "^4.17.0",
     "mkdirp-promise": "^5.0.1",
     "node-forge": "^0.7.1",
