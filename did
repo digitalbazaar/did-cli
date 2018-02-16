@@ -37,6 +37,7 @@ program
 program
   .command('get')
   .description('Retrieves an existing DID Document')
+  .option('-d, --did', 'The DID to manage')
   .action(_runLedgerCommand);
 
 // add an authentication key to a DID Document
