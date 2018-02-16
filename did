@@ -37,7 +37,7 @@ program
 program
   .command('get')
   .description('Retrieves an existing DID Document')
-  .option('-d, --did', 'The DID to manage')
+  .option('-d, --did', 'The DID to retrieve')
   .action(_runLedgerCommand);
 
 // add an authentication key to a DID Document
@@ -82,7 +82,7 @@ if(program.args.length < 1) {
 
 function _runLedgerCommand() {
   try {
-    const command = program.args[0]._name;
+    const command = program.args[program.args.length - 1]._name;
     const driver = drivers[program.ledger];
     if(!driver) {
       throw new Error(`"${program.ledger}" ledger not supported yet`);
