@@ -7,6 +7,10 @@
 const program = require('commander');
 const drivers = require('./lib');
 
+// FIXME: Fix for nginx-proxied nodes for node.js 8.x.x
+const tls = require('tls');
+tls.DEFAULT_ECDH_CURVE = 'auto';
+
 // setup the command line
 program
   .usage('command [options]')
