@@ -20,7 +20,6 @@
   },
   "homepage": "https://github.com/digitalbazaar/did-client",
   "dependencies": {
-    "commander": "^2.11.0",
     "did-client-veres-one": "veres-one/did-client-veres-one#implementation",
     "did-veres-one": "veres-one/did-veres-one#implementation",
     "equihash-signature": "digitalbazaar/equihash-signature#master",
@@ -31,7 +30,8 @@
     "mkdirp-promise": "^5.0.1",
     "node-forge": "^0.7.1",
     "program": "^1.0.0",
-    "r2": "^2.0.0"
+    "r2": "^2.0.0",
+    "yargs": "^11.0.0"
   },
   "engines": {
     "node": ">=6.0.0"

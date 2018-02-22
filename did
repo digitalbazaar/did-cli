@@ -4,100 +4,156 @@
  *
  * Copyright (c) 2017 Digital Bazaar, Inc. All rights reserved.
  */
-const program = require('commander');
 const drivers = require('./lib');
+const yargs = require('yargs');
+const {join} = require('path');
+
+const {homepage} = require(join(__dirname, 'package.json'));
+
+function _setupDidCommand(yargs) {
+  return yargs
+    .positional('did', {
+      describe: 'Target DID',
+      type: 'string'
+    })
+    .option('mode', {
+      alias: 'm',
+      describe: 'Mode of operation',
+      choices: [
+        'live',
+        'test',
+        'dev'
+      ],
+      default: 'test'
+    })
+    .option('hostname', {
+      alias: 'H',
+      describe: 'Hostname (overrides mode/ledger)'
+    })
+    .option('ledger', {
+      alias: 'l',
+      describe: 'DID ledger to use',
+      choices: [
+        'btcr',
+        'consensys',
+        'sovrin',
+        'uport',
+        'veres'
+      ],
+      default: 'veres'
+    });
+}
+
+function _setupOcapCommand(yargs) {
+  return yargs
+    .positional('invoker', {
+      describe: 'DID of the invoker',
+      type: 'string'
+    });
+}
 
 // FIXME: Fix for nginx-proxied nodes for node.js 8.x.x
 const tls = require('tls');
 tls.DEFAULT_ECDH_CURVE = 'auto';
 
 // setup the command line
-program
-  .usage('command [options]')
-  .description('A program to manage Decentralized Identifiers (DIDs)')
-  .on('--help', () => {
-    console.log('\n   Examples:');
-    console.log('    $ did create');
-    console.log('    $ did authn-add -d 1234');
-    console.log('    $ did authn-rotate -d 1234');
-    console.log('    $ did authn-remove -d 1234');
-    console.log('');
+const argv = yargs
+  // FIXME: output prolog help text
+  //.usage('$0 <command>',
+  //  'A program to manage Decentralized Identifiers (DIDs)')
+
+  // create a DID
+  .command('create [did]', 'Create a DID', yargs => {
+    _setupDidCommand(yargs);
+  }, argv => _runLedgerCommand('create', argv))
+
+  // get an existing DID Document
+  .command('get <did>', 'Retrieves an existing DID Document', yargs => {
+    _setupDidCommand(yargs);
+  }, argv => _runLedgerCommand('get', argv))
+
+  // add an authentication key to a DID Document
+  .command('authn-add <did>', 'Add an authentication key to a DID', yargs => {
+    _setupDidCommand(yargs);
+  }, argv => _runLedgerCommand('authn-add', argv))
+
+  // rotate an authentication key for a DID document
+  .command('authn-rotate <did> <old-key>',
+    'Rotate an existing DID authentication key', yargs => {
+      _setupDidCommand(yargs)
+        .positional('old-key', {
+          describe: 'The old key identifier to rotate out',
+          type: 'string'
+        });
+    }, argv => _runLedgerCommand('authn-rotate', argv))
+
+  // add an object capability DID Document
+  .command('ocap-add <did> <invoker>',
+    'Add an object capability DID Document', yargs => {
+      // FIXME
+      _setupDidCommand(yargs);
+      _setupOcapCommand(yargs);
+    }, argv => _runLedgerCommand('ocap-add', argv))
+    //.option('-d, --DID', 'The DID of the invocation target')
+    //.option('-i, --invoker', 'The DID of the invoker')
+
+  // revoke an object capability DID Document
+  .command('ocap-revoke <did>',
+    'Remove an object capability DID Document', yargs => {
+      // FIXME
+      _setupDidCommand(yargs);
+      //_setupOcapCommand(yargs);
+    }, argv => _runLedgerCommand('ocap-revoke', argv))
+    //.option('-d, --DID', 'The DID of the object capability to revoke')
+
+  // general
+  // FIXME: add per-command completion support
+  .completion()
+  /*
+  .completion('completion', (current, argv) => {
   })
-  .option('-d, --did [did]', 'The DID to manage')
-  .option('-m, --mode [mode]', 'Mode of operation',
-    /^(live|test|dev)$/i, 'test')
-  .option('-l, --ledger [ledger]', 'The DID ledger to use',
-    /^(veres|sovrin|btcr|uport|consensys)$/i, 'veres')
-  .option('-v, --verbose', 'Verbose output')
-  .version('0.1.0');
+  */
+  .demandCommand(1, 'Please specify a command to execute.')
+  .help('h')
+  .alias('h', 'help')
+  .count('v')
+  .describe('v', 'Increase verbosity')
+  .alias('v', 'verbose')
+  .epilog(`Documentation: ${homepage}`)
 
-// create a DID
-program
-  .command('create')
-  .description('Create a DID')
-  .action(_runLedgerCommand);
+  // examples
+  .example(
+    '$0 create',
+    'Create a DID')
+  .example(
+    '$0 authn-add did:example:1234',
+    'Add DID authentication key')
+  .example(
+    '$0 authn-rotate did:example:1234',
+    'Rotate DID authentication key')
+  .example(
+    '$0 authn-remove did:example:1234',
+    'Remove DID authentication key')
 
-// get an existing DID Document
-program
-  .command('get')
-  .description('Retrieves an existing DID Document')
-  .option('-d, --did', 'The DID to retrieve')
-  .action(_runLedgerCommand);
-
-// add an authentication key to a DID Document
-program
-  .command('authn-add')
-  .description('Add an authentication key to a DID')
-  .option('-d, --did', 'The DID to manage')
-  .action(_runLedgerCommand);
-
-// rotate an authentication key for a DID document
-program
-  .command('authn-rotate')
-  .description('Rotate an existing DID authentication key')
-  .option('-d, --did', 'The DID to manage')
-  .option('-o, --old-key', 'The old key identifier to rotate out')
-  .action(_runLedgerCommand);
-
-// add an object capability DID Document
-program
-  .command('ocap-add')
-  .description('Add an object capability DID Document')
-  .option('-d, --DID', 'The DID of the invocation target')
-  .option('-i, --invoker', 'The DID of the invoker')
-  .action(_runLedgerCommand);
-
-// revoke an object capability DID Document
-program
-  .command('ocap-revoke')
-  .description('Remove an object capability DID Document')
-  .option('-d, --DID', 'The DID of the object capability to revoke')
-  .action(_runLedgerCommand);
+  .argv;
 
 process.on('unhandledRejection', error => {
   console.error(error);
 });
 
-program.parse(process.argv);
-if(program.args.length < 1) {
-  program.help();
-  process.exit(0);
-}
-
-function _runLedgerCommand() {
+function _runLedgerCommand(command, argv) {
   try {
-    const command = program.args[program.args.length - 1]._name;
-    const driver = drivers[program.ledger];
+    const driver = drivers[argv.ledger];
     if(!driver) {
-      throw new Error(`"${program.ledger}" ledger not supported yet`);
+      throw new Error(`"${argv.ledger}" ledger not supported`);
     }
     console.log(
-      `Executing "${command}" using ledger "${program.ledger}"...`);
+      `Executing "${command}" using ledger "${argv.ledger}"...`);
     const api = driver[command];
     if(!api) {
       throw new Error(`"${command}" not implemented`);
     }
-    api(program);
+    api(argv);
   } catch(e) {
     console.error(e);
   }
