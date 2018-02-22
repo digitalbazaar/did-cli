@@ -5,6 +5,7 @@
  * Copyright (c) 2017 Digital Bazaar, Inc. All rights reserved.
  */
 const drivers = require('./lib');
+const manage = require('./lib/manage');
 const yargs = require('yargs');
 const {join} = require('path');
 
@@ -61,6 +62,53 @@ const argv = yargs
   // FIXME: output prolog help text
   //.usage('$0 <command>',
   //  'A program to manage Decentralized Identifiers (DIDs)')
+
+  // list DIDs
+  .command(['list', 'ls'], 'List local DIDs', yargs => {
+    yargs
+      .option('filename', {
+        describe: 'Print filenames',
+        type: 'boolean',
+        default: false
+      });
+  }, argv => manage.list({
+    filename: argv.filename
+  }))
+
+  .command(['remove <did>', 'rm'], 'Remove local DID', yargs => {
+    yargs
+      .positional('did', {
+        describe: 'DID to remove',
+        type: 'string'
+      });
+  }, argv => manage.remove(argv.did))
+
+  .command(['info <did>', 'i'], 'Show DID information', yargs => {
+    yargs
+      .positional('did', {
+        describe: 'DID to show',
+        type: 'string'
+      })
+      .option('format', {
+        alias: 'f',
+        describe: 'Output data format',
+        choices: [
+          'human',
+          'json'
+        ],
+        default: 'human'
+      })
+      .option('public-key', {
+        describe: 'Show public key #1',
+      })
+      .option('private-key', {
+        describe: 'Show private key #1',
+      });
+  }, argv => manage.info(argv.did, {
+    format: argv.format,
+    publicKey: argv.publicKey,
+    privateKey: argv.privateKey
+  }))
 
   // create a DID
   .command('create [did]', 'Create a DID', yargs => {
