@@ -1,5 +1,11 @@
 # did-client ChangeLog
 
+## 0.2.0 - 2018-02-24
+
+### Added
+- Enable use of Ed25519 keys.
+- Add basic ld-ocap support.
+
 ## 0.1.1 - 2017-09-29
 
 ### Changed
