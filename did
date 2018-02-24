@@ -11,12 +11,8 @@ const {join} = require('path');
 
 const {homepage} = require(join(__dirname, 'package.json'));
 
-function _setupDidCommand(yargs) {
+function _setupRemoteCommand(yargs) {
   return yargs
-    .positional('did', {
-      describe: 'Target DID',
-      type: 'string'
-    })
     .option('mode', {
       alias: 'm',
       describe: 'Mode of operation',
@@ -42,6 +38,14 @@ function _setupDidCommand(yargs) {
         'veres'
       ],
       default: 'veres'
+    });
+}
+
+function _setupDidCommand(yargs) {
+  return _setupRemoteCommand(yargs)
+    .positional('did', {
+      describe: 'Target DID',
+      type: 'string'
     });
 }
 
@@ -111,8 +115,28 @@ const argv = yargs
   }))
 
   // create a DID
-  .command('create [did]', 'Create a DID', yargs => {
-    _setupDidCommand(yargs);
+  .command('create', 'Create a DID', yargs => {
+    _setupRemoteCommand(yargs)
+      .option('did', {
+        alias: 'd',
+        describe: 'Authorization DID',
+        type: 'string'
+      })
+      .option('accelerator', {
+        alias: 'a',
+        describe: 'Accelerator hostname[:port]',
+        type: 'string'
+      })
+      .option('type', {
+        alias: 't',
+        describe: 'Key type',
+        choices: [
+          'ed25519',
+          'rsa'
+        ],
+        default: 'ed25519'
+      })
+      .implies('accelerator', 'did');
   }, argv => _runLedgerCommand('create', argv))
 
   // get an existing DID Document
