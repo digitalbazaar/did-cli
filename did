@@ -189,6 +189,9 @@ yargs
   //.usage('$0 <command>',
   //  'A program to manage Decentralized Identifiers (DIDs)')
 
+  // accept env vars
+  .env('DID_CLIENT')
+
   .command(['list', 'ls'],
     'List local DIDs',
     yargs => {
