@@ -25,6 +25,7 @@
     "did-veres-one": "veres-one/did-veres-one#pubdoc",
     "equihash-signature": "digitalbazaar/equihash-signature#master",
     "fs-extra": "^5.0.0",
+    "get-stdin": "^5.0.1",
     "glob": "^7.1.2",
     "jsonld": "^0.5.21",
     "jsonld-signatures": "^2.1.4",

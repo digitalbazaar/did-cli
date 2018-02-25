@@ -15,18 +15,8 @@ const {homepage} = require(join(__dirname, 'package.json'));
 const tls = require('tls');
 tls.DEFAULT_ECDH_CURVE = 'auto';
 
-function _setupRemoteCommand(yargs) {
+function _setupLedgerCommand(yargs) {
   return yargs
-    .option('mode', {
-      alias: 'm',
-      describe: 'Mode of operation',
-      choices: [
-        'live',
-        'test',
-        'dev'
-      ],
-      default: 'test'
-    })
     .option('ledger', {
       alias: 'l',
       describe: 'DID ledger to use',
@@ -38,6 +28,20 @@ function _setupRemoteCommand(yargs) {
         'veres'
       ],
       default: 'veres'
+    });
+}
+
+function _setupRemoteCommand(yargs) {
+  return yargs
+    .option('mode', {
+      alias: 'm',
+      describe: 'Mode of operation',
+      choices: [
+        'live',
+        'test',
+        'dev'
+      ],
+      default: 'test'
     })
     .option('hostname', {
       alias: 'H',
@@ -113,6 +117,10 @@ function _setupExamples(yargs, cmd) {
     'Create a local DID');
   example(
     ['create'],
+    '$0 create -p toomanysecrets',
+    'Create a DID with a passphrase');
+  example(
+    ['create'],
     '$0 create -m dev -t rsa -s',
     'Create a DID and send to development ledger');
   example(
@@ -123,6 +131,10 @@ function _setupExamples(yargs, cmd) {
     ['create'],
     '$0 create -s -a did:example:me -A accelerator.example.org',
     'Create a DID and send to ledger using an accelerator');
+  example(
+    ['create'],
+    '$0 create --no-import',
+    'Create a DID and output to stdout intead of importing it');
 
   example(
     ['main', 'list'],
@@ -137,6 +149,10 @@ function _setupExamples(yargs, cmd) {
     ['main', 'send'],
     '$0 send -m dev <did>',
     'Send local DID to development ledger');
+  example(
+    ['main', 'send'],
+    '$0 send -m dev',
+    'Send DID from stdin to development ledger');
   example(
     ['send'],
     '$0 send -a did:example:me -A accelerator.example.org <did>',
@@ -166,6 +182,24 @@ function _setupExamples(yargs, cmd) {
     ['main', 'info'],
     '$0 info -f found -L all <did>',
     'Check local and all ledger hosts for DID.');
+
+  example(
+    ['export'],
+    '$0 export did:example:1234',
+    'Export public DID document to stdout');
+  example(
+    ['export'],
+    '$0 export --private did:example:1234',
+    'Export private DID document to stdout');
+
+  example(
+    ['import'],
+    '$0 import ./my-did.json',
+    'Import a DID document from a file');
+  example(
+    ['import'],
+    '$0 import',
+    'Import a DID document from stdin');
 
   example(
     ['authn-add'],
@@ -216,6 +250,7 @@ yargs
   .command(['create', 'generate'],
     'Create a DID',
     yargs => {
+      _setupLedgerCommand(yargs);
       _setupRemoteCommand(yargs);
       _setupSendCommand(yargs);
       _setupAcceleratorCommand(yargs);
@@ -234,14 +269,23 @@ yargs
           alias: 'p',
           describe: 'Passphrase',
           type: 'string'
+        })
+        .option('import', {
+          describe: 'Import generated key else write to stdout',
+          type: 'boolean',
+          default: true
         });
     },
     argv => _runLedgerCommand('create', argv))
 
-  .command('import <filename>',
+  .command('import [filename]',
     'Import DID',
     yargs => {
+      _setupLedgerCommand(yargs);
       _setupFilenameCommand(yargs);
+      _setupRemoteCommand(yargs);
+      _setupSendCommand(yargs);
+      _setupAcceleratorCommand(yargs);
       _setupExamples(yargs, 'import');
     },
     argv => _runLedgerCommand('import', argv))
@@ -249,6 +293,7 @@ yargs
   .command('export <did>',
     'Export DID',
     yargs => {
+      _setupLedgerCommand(yargs);
       _setupDidCommand(yargs);
       _setupExamples(yargs, 'export');
       yargs
@@ -260,22 +305,23 @@ yargs
           ],
           default: 'json'
         })
-        .option('public', {
-          describe: 'Export public information',
-          type: 'boolean',
-          default: true
-        })
         .option('private', {
           describe: 'Export private information',
           type: 'boolean',
           default: false
+        })
+        .option('public', {
+          describe: 'Export public information',
+          type: 'boolean',
+          default: true
         });
     },
     argv => _runLedgerCommand('export', argv))
 
-  .command('send <did>',
-    'Send local DID to ledger',
+  .command('send [did]',
+    'Send DID to ledger',
     yargs => {
+      _setupLedgerCommand(yargs);
       _setupDidCommand(yargs);
       _setupRemoteCommand(yargs);
       _setupAcceleratorCommand(yargs);
@@ -286,6 +332,7 @@ yargs
   .command('receive <did>',
     'Receive DID from ledger',
     yargs => {
+      _setupLedgerCommand(yargs);
       _setupDidCommand(yargs);
       _setupRemoteCommand(yargs);
       _setupExamples(yargs, 'receive');
@@ -296,6 +343,7 @@ yargs
   .command('revoke <did>',
     'Revoke DID',
     yargs => {
+      _setupLedgerCommand(yargs);
       _setupDidCommand(yargs);
       _setupRemoteCommand(yargs);
     },
@@ -305,6 +353,7 @@ yargs
   .command(['info <did>', 'i', 'get'],
     'Show DID information',
     yargs => {
+      _setupLedgerCommand(yargs);
       _setupDidCommand(yargs);
       _setupRemoteCommand(yargs);
       _setupExamples(yargs, 'info');
@@ -344,6 +393,7 @@ yargs
   .command('authn-add <did>',
     'Add an authentication key to a DID',
     yargs => {
+      _setupLedgerCommand(yargs);
       _setupDidCommand(yargs);
       _setupRemoteCommand(yargs);
       _setupExamples(yargs, 'authn-add');
@@ -353,6 +403,7 @@ yargs
   .command('authn-rotate <did> <old-key>',
     'Rotate an existing DID authentication key',
     yargs => {
+      _setupLedgerCommand(yargs);
       _setupDidCommand(yargs);
       _setupRemoteCommand(yargs);
       _setupExamples(yargs, 'authn-rotate');
@@ -367,6 +418,7 @@ yargs
   .command('authn-remove <did> <key>',
     'Remove an existing DID authentication key',
     yargs => {
+      _setupLedgerCommand(yargs);
       _setupDidCommand(yargs);
       _setupRemoteCommand(yargs);
       _setupExamples(yargs, 'authn-remove');
@@ -382,6 +434,7 @@ yargs
   .command('ocap-add <did> <invoker>',
     'Add an object capability DID Document',
     yargs => {
+      _setupLedgerCommand(yargs);
       _setupDidCommand(yargs);
       _setupOcapCommand(yargs);
       _setupExamples(yargs, 'ocap-add');
@@ -393,6 +446,7 @@ yargs
   .command('ocap-revoke <did>',
     'Remove an object capability DID Document',
     yargs => {
+      _setupLedgerCommand(yargs);
       _setupDidCommand(yargs);
       //_setupOcapCommand(yargs);
       _setupExamples(yargs, 'ocap-revoke');
@@ -413,6 +467,9 @@ yargs
   .count('v')
   .describe('v', 'Increase verbosity')
   .alias('v', 'verbose')
+  .describe('q', 'Quiet output')
+  .boolean('q')
+  .alias('q', 'quiet')
   .epilog(`Documentation: ${homepage}`);
 
 _setupExamples(yargs, 'main');
@@ -430,8 +487,10 @@ function _runLedgerCommand(command, argv) {
     if(!driver) {
       throw new Error(`"${argv.ledger}" ledger not supported`);
     }
-    console.log(
-      `Executing "${command}" using ledger "${argv.ledger}"...`);
+    if(argv.verbose >= 1) {
+      console.log(
+        `Executing "${command}" using ledger "${argv.ledger}"...`);
+    }
     const api = driver[command];
     if(!api) {
       throw new Error(`"${command}" not implemented`);
