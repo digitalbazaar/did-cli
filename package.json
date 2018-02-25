@@ -20,8 +20,9 @@
   },
   "homepage": "https://github.com/digitalbazaar/did-client",
   "dependencies": {
+    "chalk": "^2.3.1",
     "did-client-veres-one": "veres-one/did-client-veres-one#accel",
-    "did-veres-one": "veres-one/did-veres-one#implementation",
+    "did-veres-one": "veres-one/did-veres-one#pubdoc",
     "equihash-signature": "digitalbazaar/equihash-signature#master",
     "fs-extra": "^5.0.0",
     "glob": "^7.1.2",

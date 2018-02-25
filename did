@@ -11,6 +11,10 @@ const {join} = require('path');
 
 const {homepage} = require(join(__dirname, 'package.json'));
 
+// FIXME: Fix for nginx-proxied nodes for node.js 8.x.x
+const tls = require('tls');
+tls.DEFAULT_ECDH_CURVE = 'auto';
+
 function _setupRemoteCommand(yargs) {
   return yargs
     .option('mode', {
@@ -23,10 +27,6 @@ function _setupRemoteCommand(yargs) {
       ],
       default: 'test'
     })
-    .option('hostname', {
-      alias: 'H',
-      describe: 'Hostname (overrides mode/ledger)'
-    })
     .option('ledger', {
       alias: 'l',
       describe: 'DID ledger to use',
@@ -38,15 +38,53 @@ function _setupRemoteCommand(yargs) {
         'veres'
       ],
       default: 'veres'
+    })
+    .option('hostname', {
+      alias: 'H',
+      describe: 'Ledger hostname (overrides mode/ledger)',
+      type: 'string'
+    })
+    .option('auth', {
+      alias: 'a',
+      describe: 'Authorization DID',
+      type: 'string'
     });
 }
 
 function _setupDidCommand(yargs) {
-  return _setupRemoteCommand(yargs)
+  return yargs
     .positional('did', {
       describe: 'Target DID',
       type: 'string'
     });
+}
+
+function _setupFilenameCommand(yargs) {
+  return yargs
+    .positional('filename', {
+      describe: 'Target filename',
+      type: 'string'
+    });
+}
+
+function _setupSendCommand(yargs) {
+  return yargs
+    .option('send', {
+      alias: 's',
+      describe: 'Send to network',
+      type: 'boolean',
+      default: false
+    });
+}
+
+function _setupAcceleratorCommand(yargs) {
+  return yargs
+    .option('accelerator', {
+      alias: 'A',
+      describe: 'Accelerator hostname[:port]',
+      type: 'string'
+    })
+    .implies('accelerator', 'auth');
 }
 
 function _setupOcapCommand(yargs) {
@@ -57,125 +95,306 @@ function _setupOcapCommand(yargs) {
     });
 }
 
-// FIXME: Fix for nginx-proxied nodes for node.js 8.x.x
-const tls = require('tls');
-tls.DEFAULT_ECDH_CURVE = 'auto';
+// add examples if tagged for a command.  "main" is main app.
+function _setupExamples(yargs, cmd) {
+  function example(cmds, ...rest) {
+    if(cmds.includes(cmd)) {
+      yargs.example(...rest);
+    }
+  }
+  example(
+    ['main'],
+    '$0 COMMAND -h',
+    'Show help and more examples for COMMAND');
+
+  example(
+    ['main', 'create'],
+    '$0 create',
+    'Create a local DID');
+  example(
+    ['create'],
+    '$0 create -m dev -t rsa -s',
+    'Create a DID and send to development ledger');
+  example(
+    ['main', 'create'],
+    '$0 create -t rsa -s',
+    'Create a RSA DID and send to ledger');
+  example(
+    ['create'],
+    '$0 create -s -a did:example:me -A accelerator.example.org',
+    'Create a DID and send to ledger using an accelerator');
+
+  example(
+    ['main', 'list'],
+    '$0 list',
+    'List local DIDs');
+
+  example(
+    ['main', 'send'],
+    '$0 send did:example:1234',
+    'Send local DID to default ledger');
+  example(
+    ['main', 'send'],
+    '$0 send -m dev <did>',
+    'Send local DID to development ledger');
+  example(
+    ['send'],
+    '$0 send -a did:example:me -A accelerator.example.org <did>',
+    'Send local DID to ledger using an accelerator');
+
+  example(
+    ['main', 'info'],
+    '$0 info did:example:1234',
+    'Show local DID info or search on ledger.');
+  example(
+    ['main', 'info'],
+    '$0 info -L ledger <did>',
+    'Show DID info on ledger.');
+  example(
+    ['main', 'info'],
+    '$0 info -f human -L both <did>',
+    'Show readable DID info.');
+  example(
+    ['main', 'info'],
+    '$0 info -f found -L both <did>',
+    'Check local and ledger for DID.');
+  example(
+    ['main', 'info'],
+    '$0 info -f found -L ledger -H host1.example.org <did>',
+    'Check single ledger host for DID.');
+  example(
+    ['main', 'info'],
+    '$0 info -f found -L all <did>',
+    'Check local and all ledger hosts for DID.');
+
+  example(
+    ['authn-add'],
+    '$0 authn-add did:example:1234',
+    'Add DID authentication key');
+
+  example(
+    ['authn-rotate'],
+    '$0 authn-rotate did:example:1234',
+    'Rotate DID authentication key');
+
+  example(
+    ['authn-remove'],
+    '$0 authn-remove did:example:1234',
+    'Remove DID authentication key');
+}
 
 // setup the command line
-const argv = yargs
+yargs
   // FIXME: output prolog help text
   //.usage('$0 <command>',
   //  'A program to manage Decentralized Identifiers (DIDs)')
 
-  // list DIDs
-  .command(['list', 'ls'], 'List local DIDs', yargs => {
-    yargs
-      .option('filename', {
-        describe: 'Print filenames',
-        type: 'boolean',
-        default: false
-      });
-  }, argv => manage.list({
-    filename: argv.filename
-  }))
+  .command(['list', 'ls'],
+    'List local DIDs',
+    yargs => {
+      _setupExamples(yargs, 'list');
+      yargs
+        .option('filename', {
+          describe: 'Print filenames',
+          type: 'boolean',
+          default: false
+        });
+    },
+    argv => manage.list(argv))
 
-  .command(['remove <did>', 'rm'], 'Remove local DID', yargs => {
-    yargs
-      .positional('did', {
-        describe: 'DID to remove',
-        type: 'string'
-      });
-  }, argv => manage.remove(argv.did))
+  .command(['remove <did>', 'rm'],
+    'Remove local DID',
+    yargs => {
+      _setupDidCommand(yargs);
+      _setupExamples(yargs, 'remove');
+    },
+    argv => manage.remove(argv))
 
-  .command(['info <did>', 'i'], 'Show DID information', yargs => {
-    yargs
-      .positional('did', {
-        describe: 'DID to show',
-        type: 'string'
-      })
-      .option('format', {
-        alias: 'f',
-        describe: 'Output data format',
-        choices: [
-          'human',
-          'json'
-        ],
-        default: 'human'
-      })
-      .option('public-key', {
-        describe: 'Show public key #1',
-      })
-      .option('private-key', {
-        describe: 'Show private key #1',
-      });
-  }, argv => manage.info(argv.did, {
-    format: argv.format,
-    publicKey: argv.publicKey,
-    privateKey: argv.privateKey
-  }))
+  .command(['create', 'generate'],
+    'Create a DID',
+    yargs => {
+      _setupRemoteCommand(yargs);
+      _setupSendCommand(yargs);
+      _setupAcceleratorCommand(yargs);
+      _setupExamples(yargs, 'create');
+      yargs
+        .option('type', {
+          alias: 't',
+          describe: 'Key type',
+          choices: [
+            'ed25519',
+            'rsa'
+          ],
+          default: 'ed25519'
+        })
+        .option('passphrase', {
+          alias: 'p',
+          describe: 'Passphrase',
+          type: 'string'
+        });
+    },
+    argv => _runLedgerCommand('create', argv))
 
-  // create a DID
-  .command('create', 'Create a DID', yargs => {
-    _setupRemoteCommand(yargs)
-      .option('did', {
-        alias: 'd',
-        describe: 'Authorization DID',
-        type: 'string'
-      })
-      .option('accelerator', {
-        alias: 'a',
-        describe: 'Accelerator hostname[:port]',
-        type: 'string'
-      })
-      .option('type', {
-        alias: 't',
-        describe: 'Key type',
-        choices: [
-          'ed25519',
-          'rsa'
-        ],
-        default: 'ed25519'
-      })
-      .implies('accelerator', 'did');
-  }, argv => _runLedgerCommand('create', argv))
+  .command('import <filename>',
+    'Import DID',
+    yargs => {
+      _setupFilenameCommand(yargs);
+      _setupExamples(yargs, 'import');
+    },
+    argv => _runLedgerCommand('import', argv))
 
-  // get an existing DID Document
-  .command('get <did>', 'Retrieves an existing DID Document', yargs => {
-    _setupDidCommand(yargs);
-  }, argv => _runLedgerCommand('get', argv))
+  .command('export <did>',
+    'Export DID',
+    yargs => {
+      _setupDidCommand(yargs);
+      _setupExamples(yargs, 'export');
+      yargs
+        .option('format', {
+          alias: 'f',
+          describe: 'Output data format',
+          choices: [
+            'json'
+          ],
+          default: 'json'
+        })
+        .option('public', {
+          describe: 'Export public information',
+          type: 'boolean',
+          default: true
+        })
+        .option('private', {
+          describe: 'Export private information',
+          type: 'boolean',
+          default: false
+        });
+    },
+    argv => _runLedgerCommand('export', argv))
 
-  // add an authentication key to a DID Document
-  .command('authn-add <did>', 'Add an authentication key to a DID', yargs => {
-    _setupDidCommand(yargs);
-  }, argv => _runLedgerCommand('authn-add', argv))
+  .command('send <did>',
+    'Send local DID to ledger',
+    yargs => {
+      _setupDidCommand(yargs);
+      _setupRemoteCommand(yargs);
+      _setupAcceleratorCommand(yargs);
+      _setupExamples(yargs, 'send');
+    },
+    argv => _runLedgerCommand('send', argv))
 
-  // rotate an authentication key for a DID document
+  .command('receive <did>',
+    'Receive DID from ledger',
+    yargs => {
+      _setupDidCommand(yargs);
+      _setupRemoteCommand(yargs);
+      _setupExamples(yargs, 'receive');
+    },
+    argv => _runLedgerCommand('receive', argv))
+
+  /*
+  .command('revoke <did>',
+    'Revoke DID',
+    yargs => {
+      _setupDidCommand(yargs);
+      _setupRemoteCommand(yargs);
+    },
+    argv => _runLedgerCommand('revoke', argv))
+  */
+
+  .command(['info <did>', 'i', 'get'],
+    'Show DID information',
+    yargs => {
+      _setupDidCommand(yargs);
+      _setupRemoteCommand(yargs);
+      _setupExamples(yargs, 'info');
+      yargs
+        .option('format', {
+          alias: 'f',
+          describe: 'Output data format',
+          choices: [
+            'found',
+            'human',
+            'json'
+          ],
+          default: 'json'
+        })
+        .option('location', {
+          alias: 'L',
+          describe: 'Location to get DID information',
+          choices: [
+            'any',
+            'local',
+            'ledger',
+            'both',
+            'ledger-all',
+            'all'
+          ],
+          default: 'any'
+        })
+        .option('public-key', {
+          describe: 'Show public key #1',
+        })
+        .option('private-key', {
+          describe: 'Show private key #1',
+        });
+    },
+    argv => _runLedgerCommand('info', argv))
+
+  .command('authn-add <did>',
+    'Add an authentication key to a DID',
+    yargs => {
+      _setupDidCommand(yargs);
+      _setupRemoteCommand(yargs);
+      _setupExamples(yargs, 'authn-add');
+    },
+    argv => _runLedgerCommand('authn-add', argv))
+
   .command('authn-rotate <did> <old-key>',
-    'Rotate an existing DID authentication key', yargs => {
-      _setupDidCommand(yargs)
+    'Rotate an existing DID authentication key',
+    yargs => {
+      _setupDidCommand(yargs);
+      _setupRemoteCommand(yargs);
+      _setupExamples(yargs, 'authn-rotate');
+      yargs
         .positional('old-key', {
           describe: 'The old key identifier to rotate out',
           type: 'string'
         });
-    }, argv => _runLedgerCommand('authn-rotate', argv))
+    },
+    argv => _runLedgerCommand('authn-rotate', argv))
 
-  // add an object capability DID Document
+  .command('authn-remove <did> <key>',
+    'Remove an existing DID authentication key',
+    yargs => {
+      _setupDidCommand(yargs);
+      _setupRemoteCommand(yargs);
+      _setupExamples(yargs, 'authn-remove');
+      yargs
+        .positional('key', {
+          describe: 'The key identifier to remove',
+          type: 'string'
+        });
+    },
+    argv => _runLedgerCommand('authn-remove', argv))
+
+  // FIXME
   .command('ocap-add <did> <invoker>',
-    'Add an object capability DID Document', yargs => {
-      // FIXME
+    'Add an object capability DID Document',
+    yargs => {
       _setupDidCommand(yargs);
       _setupOcapCommand(yargs);
-    }, argv => _runLedgerCommand('ocap-add', argv))
+      _setupExamples(yargs, 'ocap-add');
+    },
+    argv => _runLedgerCommand('ocap-add', argv))
     //.option('-d, --DID', 'The DID of the invocation target')
-    //.option('-i, --invoker', 'The DID of the invoker')
 
-  // revoke an object capability DID Document
+  // FIXME
   .command('ocap-revoke <did>',
-    'Remove an object capability DID Document', yargs => {
-      // FIXME
+    'Remove an object capability DID Document',
+    yargs => {
       _setupDidCommand(yargs);
       //_setupOcapCommand(yargs);
-    }, argv => _runLedgerCommand('ocap-revoke', argv))
+      _setupExamples(yargs, 'ocap-revoke');
+    },
+    argv => _runLedgerCommand('ocap-revoke', argv))
     //.option('-d, --DID', 'The DID of the object capability to revoke')
 
   // general
@@ -191,23 +410,12 @@ const argv = yargs
   .count('v')
   .describe('v', 'Increase verbosity')
   .alias('v', 'verbose')
-  .epilog(`Documentation: ${homepage}`)
+  .epilog(`Documentation: ${homepage}`);
 
-  // examples
-  .example(
-    '$0 create',
-    'Create a DID')
-  .example(
-    '$0 authn-add did:example:1234',
-    'Add DID authentication key')
-  .example(
-    '$0 authn-rotate did:example:1234',
-    'Rotate DID authentication key')
-  .example(
-    '$0 authn-remove did:example:1234',
-    'Remove DID authentication key')
+_setupExamples(yargs, 'main');
 
-  .argv;
+// parse
+yargs.argv;
 
 process.on('unhandledRejection', error => {
   console.error(error);
