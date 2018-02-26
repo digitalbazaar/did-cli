@@ -469,6 +469,11 @@ yargs
           ],
           default: 'plain'
         })
+        .option('all', {
+          describe: 'Enable mutable operations on all DIDs',
+          type: 'boolean',
+          default: false,
+        })
         .option('clear', {
           describe: 'Clear all properties',
           type: 'boolean',
