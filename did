@@ -125,6 +125,10 @@ function _setupExamples(yargs, cmd) {
     'Create a DID and send to development ledger');
   example(
     ['main', 'create'],
+    '$0 create --name my-did-1 --description \'My 1st Veres One DID!\'',
+    'Create a local DID with private meta-data');
+  example(
+    ['main', 'create'],
     '$0 create -t rsa -s',
     'Create a RSA DID and send to ledger');
   example(
@@ -140,6 +144,10 @@ function _setupExamples(yargs, cmd) {
     ['main', 'list'],
     '$0 list',
     'List local DIDs');
+  example(
+    ['main', 'list'],
+    '$0 list --filenames',
+    'List filenames of local DIDs');
 
   example(
     ['main', 'send'],
@@ -184,13 +192,45 @@ function _setupExamples(yargs, cmd) {
     'Check local and all ledger hosts for DID.');
 
   example(
-    ['export'],
-    '$0 export did:example:1234',
-    'Export public DID document to stdout');
+    ['main', 'notes'],
+    '$0 notes',
+    'Show all private notes for all DIDs');
   example(
-    ['export'],
-    '$0 export --private did:example:1234',
-    'Export private DID document to stdout');
+    ['main', 'notes'],
+    '$0 notes <did>',
+    'Show all private notes for a DID');
+  example(
+    ['notes'],
+    '$0 notes --get name',
+    'Show all DIDs with a name set');
+  example(
+    ['notes'],
+    '$0 notes <did> --clear',
+    'Clear private notes for a DID');
+  example(
+    ['main', 'notes'],
+    '$0 notes <did> --set name my-name',
+    'Set private property/value pair note for a DID');
+  example(
+    ['notes'],
+    '$0 notes <did> --set url https://example.com/',
+    'Set private property/value pair note for a DID');
+  example(
+    ['notes'],
+    '$0 notes <did> --get schema:url',
+    'Get private property/value pair note for a DID');
+  example(
+    ['notes'],
+    '$0 notes <did> --remove schema:url',
+    'Remove private note property for a DID');
+  example(
+    ['main', 'notes'],
+    '$0 notes --find name my-name',
+    'Show all DIDs with a specific name set');
+  example(
+    ['notes'],
+    '$0 notes did:example:1234 --name my-did-1 --description \'My DID!\'',
+    'Set DID private notes with standard name and description');
 
   example(
     ['import'],
@@ -200,6 +240,15 @@ function _setupExamples(yargs, cmd) {
     ['import'],
     '$0 import',
     'Import a DID document from stdin');
+
+  example(
+    ['export'],
+    '$0 export did:example:1234',
+    'Export public DID document to stdout');
+  example(
+    ['export'],
+    '$0 export --private did:example:1234',
+    'Export private DID document to stdout');
 
   example(
     ['authn-add'],
@@ -231,7 +280,7 @@ yargs
     yargs => {
       _setupExamples(yargs, 'list');
       yargs
-        .option('filename', {
+        .option('filenames', {
           describe: 'Print filenames',
           type: 'boolean',
           default: false
@@ -274,6 +323,14 @@ yargs
           describe: 'Import generated key else write to stdout',
           type: 'boolean',
           default: true
+        })
+        .option('name', {
+          describe: 'Set DID private name note',
+          type: 'string'
+        })
+        .option('description', {
+          describe: 'Set DID private description note',
+          type: 'string'
         });
     },
     argv => _runLedgerCommand('create', argv))
@@ -390,6 +447,50 @@ yargs
     },
     argv => _runLedgerCommand('info', argv))
 
+  .command(['notes [did]', 'n'],
+    'Manage DID private notes',
+    yargs => {
+      _setupLedgerCommand(yargs);
+      _setupDidCommand(yargs);
+      _setupRemoteCommand(yargs);
+      _setupExamples(yargs, 'notes');
+      yargs
+        .option('format', {
+          alias: 'f',
+          describe: 'Output format',
+          choice: [
+            'plain',
+            'json-compact',
+            'json',
+          ],
+          default: 'plain'
+        })
+        .option('clear', {
+          describe: 'Clear all properties',
+          type: 'boolean',
+          default: false,
+        })
+        .option('remove', {
+          describe: 'Property name to remove',
+          type: 'string',
+        })
+        .option('set', {
+          describe: 'Property name and value to set',
+          nargs: 2,
+          type: 'string',
+        })
+        .option('get', {
+          describe: 'Property name to get',
+          type: 'string',
+        })
+        .option('find', {
+          describe: 'Property name to and value to find',
+          nargs: 2,
+          type: 'string'
+        });
+    },
+    argv => _runLedgerCommand('notes', argv))
+
   .command('authn-add <did>',
     'Add an authentication key to a DID',
     yargs => {
@@ -470,6 +571,11 @@ yargs
   .describe('q', 'Quiet output')
   .boolean('q')
   .alias('q', 'quiet')
+  /*
+  .string('config')
+  .describe('config', 'Path to config file')
+  .default('config', '$HOME/.did/config.json')
+  */
   .epilog(`Documentation: ${homepage}`);
 
 _setupExamples(yargs, 'main');
