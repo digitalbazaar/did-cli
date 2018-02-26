@@ -213,16 +213,20 @@ function _setupExamples(yargs, cmd) {
     'Set private property/value pair note for a DID');
   example(
     ['notes'],
-    '$0 notes <did> --set url https://example.com/',
-    'Set private property/value pair note for a DID');
+    '$0 notes <did> --add ledger veres',
+    'Add private property/value pair note for a DID');
   example(
     ['notes'],
     '$0 notes <did> --get schema:url',
     'Get private property/value pair note for a DID');
   example(
     ['notes'],
-    '$0 notes <did> --remove schema:url',
+    '$0 notes <did> --remove ledger veres',
     'Remove private note property for a DID');
+  example(
+    ['notes'],
+    '$0 notes <did> --delete schema:url',
+    'Delete all private note properties for a DID');
   example(
     ['main', 'notes'],
     '$0 notes --find name my-name',
@@ -470,21 +474,31 @@ yargs
           type: 'boolean',
           default: false,
         })
-        .option('remove', {
-          describe: 'Property name to remove',
+        .option('add', {
+          describe: 'Multi-value property and value to add',
+          nargs: 2,
           type: 'string',
         })
-        .option('set', {
-          describe: 'Property name and value to set',
+        .option('remove', {
+          describe: 'Multi-value property and value to remove',
           nargs: 2,
           type: 'string',
         })
         .option('get', {
-          describe: 'Property name to get',
+          describe: 'Property to get',
+          type: 'string',
+        })
+        .option('set', {
+          describe: 'Property and value to set',
+          nargs: 2,
+          type: 'string',
+        })
+        .option('delete', {
+          describe: 'Property to delete',
           type: 'string',
         })
         .option('find', {
-          describe: 'Property name to and value to find',
+          describe: 'Multi-value property name to value to find',
           nargs: 2,
           type: 'string'
         });
