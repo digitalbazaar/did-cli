@@ -126,7 +126,7 @@ function _setupExamples(yargs, cmd) {
   example(
     ['main', 'create'],
     '$0 create --name my-did-1 --description \'My 1st Veres One DID!\'',
-    'Create a local DID with private meta-data');
+    'Create a local DID with private notes');
   example(
     ['main', 'create'],
     '$0 create -t rsa -s',
