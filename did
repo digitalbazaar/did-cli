@@ -466,6 +466,36 @@ yargs
         })
         .option('private-key', {
           describe: 'Show private key #1',
+        })
+        .option('retry', {
+          describe: 'Retry until all found',
+          type: 'boolean',
+          default: false
+        })
+        .option('retry-show-found', {
+          describe: 'Only show found while retrying',
+          type: 'boolean',
+          default: false
+        })
+        .option('retry-ms', {
+          describe: 'ms to wait between retries',
+          type: 'number',
+          default: 1000
+        })
+        .option('retry-timeout-ms', {
+          describe: 'ms before retries timeout',
+          type: 'number',
+          default: 30000
+        })
+        .option('retry-max', {
+          describe: 'Maximum number of retries',
+          type: 'number',
+          default: 30
+        })
+        .option('retry-sim-failure', {
+          describe: 'Percent chance of simulated ledger failure [0.0-1.0]',
+          type: 'number',
+          default: 0.0
         });
     },
     argv => _runLedgerCommand('info', argv))
