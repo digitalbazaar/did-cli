@@ -295,13 +295,18 @@ Import a private DID file from elsewhere:
 
     did import ./my-did.json
 
-Silly tricks:
+Tips and tricks:
 
     # which DIDs did I register on the test ledger?
     for did in `did list`; do echo $did; did info -f found $did; done
 
     # import from remote site
     ssh me@example.com did export did:example:test:1234 --private | did import
+
+    # reload DIDs on a dev ledger after a wipe
+    did notes --find ledger veres:dev | xargs -I {} did send -m dev {}
+    # alternative
+    for d in `did notes --find ledger veres:dev`; do did send -m dev $did; done
 
 ## Roadmap
 
