@@ -301,8 +301,8 @@ yargs
     yargs => {
       _setupExamples(yargs, 'list');
       yargs
-        .option('filenames', {
-          describe: 'Print filenames',
+        .option('filename', {
+          describe: 'Print storage filename',
           type: 'boolean',
           default: false
         });
