@@ -71,6 +71,15 @@ function _setupFilenameCommand(yargs) {
     });
 }
 
+function _setupNotesCommand(yargs) {
+  return yargs
+    .option('notes', {
+      describe: 'Enable automatic notes',
+      type: 'boolean',
+      default: true
+    });
+}
+
 function _setupSendCommand(yargs) {
   return yargs
     .option('send', {
@@ -139,6 +148,10 @@ function _setupExamples(yargs, cmd) {
     ['create'],
     '$0 create --no-import',
     'Create a DID and output to stdout intead of importing it');
+  example(
+    ['create'],
+    '$0 create --no-notes',
+    'Create a DID without creating automatic private notes');
 
   example(
     ['main', 'list'],
@@ -165,6 +178,10 @@ function _setupExamples(yargs, cmd) {
     ['send'],
     '$0 send -a did:example:me -A accelerator.example.org <did>',
     'Send local DID to ledger using an accelerator');
+  example(
+    ['send'],
+    '$0 send --no-notes <did>',
+    'Send DID without adding private notes');
 
   example(
     ['main', 'info'],
@@ -307,6 +324,7 @@ yargs
       _setupRemoteCommand(yargs);
       _setupSendCommand(yargs);
       _setupAcceleratorCommand(yargs);
+      _setupNotesCommand(yargs);
       _setupExamples(yargs, 'create');
       yargs
         .option('type', {
@@ -386,6 +404,7 @@ yargs
       _setupDidCommand(yargs);
       _setupRemoteCommand(yargs);
       _setupAcceleratorCommand(yargs);
+      _setupNotesCommand(yargs);
       _setupExamples(yargs, 'send');
     },
     argv => _runLedgerCommand('send', argv))
