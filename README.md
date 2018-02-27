@@ -256,7 +256,7 @@ create:
 Use an accelerator to create a DID faster. This assumes you have registered
 `did:ex:my-did` at the accelerator:
 
-    did create -s -a did:ex:test:my--did -A https://accelerator.example.com/
+    did create -s -a did:ex:test:my-did -A https://accelerator.example.com/
 
 Split creation and later send to multiple ledgers (because you are an expert
 and have solid reasons for doing this):
