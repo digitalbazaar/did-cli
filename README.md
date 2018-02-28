@@ -223,7 +223,7 @@ note is useful to keep track of where DIDs have been sent.
     did:example:test:B url https://example.com/
     did:example:test:C url https://example.org/
 
-The notes data is stored in the `config.json` file in your local DID dir.  It
+The notes data is stored in the `config.jsonld` file in your local DID dir.  It
 can be freely edited as needed.  **Warning**: This file is *not* currently safe
 to write to concurrently!
 

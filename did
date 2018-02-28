@@ -642,7 +642,7 @@ yargs
   /*
   .string('config')
   .describe('config', 'Path to config file')
-  .default('config', '$HOME/.did/config.json')
+  .default('config', '$HOME/.did/config.jsonld')
   */
   .epilog(`Documentation: ${homepage}`);
 
