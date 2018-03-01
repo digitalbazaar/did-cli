@@ -46,12 +46,14 @@ function _setupRemoteCommand(yargs) {
     .option('hostname', {
       alias: 'H',
       describe: 'Ledger hostname (overrides mode/ledger)',
-      type: 'string'
+      type: 'string',
+      nargs: 1
     })
     .option('auth', {
       alias: 'a',
       describe: 'Authorization DID',
-      type: 'string'
+      type: 'string',
+      nargs: 1
     });
 }
 
@@ -95,7 +97,8 @@ function _setupAcceleratorCommand(yargs) {
     .option('accelerator', {
       alias: 'A',
       describe: 'Accelerator hostname[:port]',
-      type: 'string'
+      type: 'string',
+      nargs: 1
     })
     .implies('accelerator', 'auth');
 }
@@ -277,14 +280,14 @@ function _setupExamples(yargs, cmd) {
     'Add DID authentication key');
 
   example(
-    ['authn-rotate'],
-    '$0 authn-rotate did:example:1234',
-    'Rotate DID authentication key');
-
-  example(
     ['authn-remove'],
     '$0 authn-remove did:example:1234',
     'Remove DID authentication key');
+
+  example(
+    ['authn-rotate'],
+    '$0 authn-rotate did:example:1234',
+    'Rotate DID authentication key');
 }
 
 // setup the command line
@@ -339,7 +342,8 @@ yargs
         .option('passphrase', {
           alias: 'p',
           describe: 'Passphrase',
-          type: 'string'
+          type: 'string',
+          nargs: 1
         })
         .option('import', {
           describe: 'Import generated key else write to stdout',
@@ -348,11 +352,13 @@ yargs
         })
         .option('name', {
           describe: 'Set DID private name note',
-          type: 'string'
+          type: 'string',
+          nargs: 1
         })
         .option('description', {
           describe: 'Set DID private description note',
-          type: 'string'
+          type: 'string',
+          nargs: 1
         });
     },
     argv => _runLedgerCommand('create', argv))
@@ -463,9 +469,13 @@ yargs
         })
         .option('public-key', {
           describe: 'Show public key #1',
+          type: 'boolean',
+          default: false
         })
         .option('private-key', {
           describe: 'Show private key #1',
+          type: 'boolean',
+          default: false
         })
         .option('retry', {
           describe: 'Retry until all found',
@@ -511,7 +521,7 @@ yargs
         .option('format', {
           alias: 'f',
           describe: 'Output format',
-          choice: [
+          choices: [
             'plain',
             'json-compact',
             'json',
@@ -530,31 +540,33 @@ yargs
         })
         .option('add', {
           describe: 'Multi-value property and value to add',
-          nargs: 2,
           type: 'string',
+          nargs: 2
         })
         .option('remove', {
           describe: 'Multi-value property and value to remove',
-          nargs: 2,
           type: 'string',
+          nargs: 2
         })
         .option('get', {
           describe: 'Property to get',
           type: 'string',
+          nargs: 1
         })
         .option('set', {
           describe: 'Property and value to set',
-          nargs: 2,
           type: 'string',
+          nargs: 2
         })
         .option('delete', {
           describe: 'Property to delete',
           type: 'string',
+          nargs: 1
         })
         .option('find', {
           describe: 'Multi-value property name to value to find',
-          nargs: 2,
-          type: 'string'
+          type: 'string',
+          nargs: 2
         });
     },
     argv => _runLedgerCommand('notes', argv))
@@ -565,24 +577,10 @@ yargs
       _setupLedgerCommand(yargs);
       _setupDidCommand(yargs);
       _setupRemoteCommand(yargs);
+      _setupSendCommand(yargs);
       _setupExamples(yargs, 'authn-add');
     },
     argv => _runLedgerCommand('authn-add', argv))
-
-  .command('authn-rotate <did> <old-key>',
-    'Rotate an existing DID authentication key',
-    yargs => {
-      _setupLedgerCommand(yargs);
-      _setupDidCommand(yargs);
-      _setupRemoteCommand(yargs);
-      _setupExamples(yargs, 'authn-rotate');
-      yargs
-        .positional('old-key', {
-          describe: 'The old key identifier to rotate out',
-          type: 'string'
-        });
-    },
-    argv => _runLedgerCommand('authn-rotate', argv))
 
   .command('authn-remove <did> <key>',
     'Remove an existing DID authentication key',
@@ -590,6 +588,7 @@ yargs
       _setupLedgerCommand(yargs);
       _setupDidCommand(yargs);
       _setupRemoteCommand(yargs);
+      _setupSendCommand(yargs);
       _setupExamples(yargs, 'authn-remove');
       yargs
         .positional('key', {
@@ -599,6 +598,22 @@ yargs
     },
     argv => _runLedgerCommand('authn-remove', argv))
 
+  .command('authn-rotate <did> <old-key>',
+    'Rotate an existing DID authentication key',
+    yargs => {
+      _setupLedgerCommand(yargs);
+      _setupDidCommand(yargs);
+      _setupRemoteCommand(yargs);
+      _setupSendCommand(yargs);
+      _setupExamples(yargs, 'authn-rotate');
+      yargs
+        .positional('old-key', {
+          describe: 'The old key identifier to rotate out',
+          type: 'string'
+        });
+    },
+    argv => _runLedgerCommand('authn-rotate', argv))
+
   // FIXME
   .command('ocap-add <did> <invoker>',
     'Add an object capability DID Document',
@@ -606,6 +621,7 @@ yargs
       _setupLedgerCommand(yargs);
       _setupDidCommand(yargs);
       _setupOcapCommand(yargs);
+      _setupSendCommand(yargs);
       _setupExamples(yargs, 'ocap-add');
     },
     argv => _runLedgerCommand('ocap-add', argv))
@@ -618,6 +634,7 @@ yargs
       _setupLedgerCommand(yargs);
       _setupDidCommand(yargs);
       //_setupOcapCommand(yargs);
+      _setupSendCommand(yargs);
       _setupExamples(yargs, 'ocap-revoke');
     },
     argv => _runLedgerCommand('ocap-revoke', argv))
