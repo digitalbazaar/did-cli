@@ -577,6 +577,7 @@ yargs
       _setupLedgerCommand(yargs);
       _setupDidCommand(yargs);
       _setupRemoteCommand(yargs);
+      _setupAcceleratorCommand(yargs);
       _setupRegisterCommand(yargs);
       _setupExamples(yargs, 'authn-add');
       yargs
@@ -623,6 +624,7 @@ yargs
       _setupLedgerCommand(yargs);
       _setupDidCommand(yargs);
       _setupRemoteCommand(yargs);
+      _setupAcceleratorCommand(yargs);
       _setupRegisterCommand(yargs);
       _setupExamples(yargs, 'authn-remove');
       yargs
@@ -639,6 +641,7 @@ yargs
       _setupLedgerCommand(yargs);
       _setupDidCommand(yargs);
       _setupRemoteCommand(yargs);
+      _setupAcceleratorCommand(yargs);
       _setupRegisterCommand(yargs);
       _setupExamples(yargs, 'authn-rotate');
       yargs
