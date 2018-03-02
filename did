@@ -133,7 +133,7 @@ function _setupExamples(yargs, cmd) {
     'Generate a DID with a passphrase');
   example(
     ['generate'],
-    '$0 generate -m dev -t rsa -s',
+    '$0 generate -m dev -t rsa -r',
     'Generate a DID and register on development ledger');
   example(
     ['main', 'generate'],
@@ -141,11 +141,11 @@ function _setupExamples(yargs, cmd) {
     'Generate a local DID with private notes');
   example(
     ['main', 'generate'],
-    '$0 generate -t rsa -s',
+    '$0 generate -t rsa -j',
     'Generate a RSA DID and register to ledger');
   example(
     ['generate'],
-    '$0 generate -s -a did:example:me -A accelerator.example.org',
+    '$0 generate -r -a did:example:me -A accelerator.example.org',
     'Generate a DID and register is using an accelerator');
   example(
     ['generate'],
@@ -320,7 +320,7 @@ yargs
     },
     argv => manage.remove(argv))
 
-  .command(['generate'],
+  .command('generate',
     'Generate a DID',
     yargs => {
       _setupLedgerCommand(yargs);
