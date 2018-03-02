@@ -579,6 +579,41 @@ yargs
       _setupRemoteCommand(yargs);
       _setupSendCommand(yargs);
       _setupExamples(yargs, 'authn-add');
+      yargs
+        .option('type', {
+          alias: 't',
+          describe: 'Key type',
+          choices: [
+            'ed25519',
+            'rsa'
+          ],
+          default: 'ed25519'
+        })
+        .option('suite', {
+          alias: 'S',
+          describe: 'Suite type',
+          choices: [
+            'authn',
+            'authentication',
+            'grant',
+            'grantCapability',
+            'invoke',
+            'invokeCapability'
+          ],
+          default: 'authentication'
+        })
+        .option('public', {
+          alias: 'p',
+          describe: 'Public key material',
+          type: 'string',
+          nargs: 1
+        })
+        .option('private', {
+          alias: 'P',
+          describe: 'Private key material',
+          type: 'string',
+          nargs: 1
+        });
     },
     argv => _runLedgerCommand('authn-add', argv))
 
