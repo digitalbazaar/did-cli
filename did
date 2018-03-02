@@ -189,11 +189,11 @@ function _setupExamples(yargs, cmd) {
   example(
     ['main', 'info'],
     '$0 info did:example:1234',
-    'Show local DID info or search on ledger.');
+    'Show DID info on ledger.');
   example(
     ['main', 'info'],
-    '$0 info -L ledger <did>',
-    'Show DID info on ledger.');
+    '$0 info -L local <did>',
+    'Show local DID info.');
   example(
     ['main', 'info'],
     '$0 info -f human -L both <did>',
@@ -465,7 +465,7 @@ yargs
             'ledger-all',
             'all'
           ],
-          default: 'any'
+          default: 'ledger'
         })
         .option('public-key', {
           describe: 'Show public key #1',

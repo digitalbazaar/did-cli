@@ -158,12 +158,13 @@ The output format can be controlled with the `--format/-f` option:
 
     did info DID -f json
 
-By default this command will just return local information.  If you wish to
-query the ledger, the `--location/-L` option has many choices:
+By default this command will return information from the ledger.  The location
+of information can be selected with the `--location/-L` option:
 
 * `any`: return DID if found locally, else check the ledger
 * `local`: only return local DIDs
 * `ledger`: only check the default ledger host (or many with `-H` options)
+  (**default**)
 * `both`: check both local *and* default ledger host (or many with `-H`
   options)
 * `ledger-all`: check all known ledger hosts
@@ -236,7 +237,7 @@ Basic generate and check DID is on ledger:
     did generate -r # generate and register on ledger
     # wait a few moments
     # ...
-    did info DID -f found -L ledger
+    did info DID -f found
     # should output "FOUND"!
 
 More extreme checking if ledger has details of multiple hosts. As of this
@@ -257,7 +258,7 @@ generate:
 Use an accelerator to register a DID faster. This assumes you have registered
 `did:ex:my-did` at the accelerator:
 
-    did generate -r -a did:ex:test:my-did -A https://accelerator.example.com/
+    did generate -r -a did:ex:test:my-did -A accelerator.example.com
 
 Split creation and later register to multiple ledgers (because you are an
 expert and have solid reasons for doing this):
