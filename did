@@ -82,11 +82,11 @@ function _setupNotesCommand(yargs) {
     });
 }
 
-function _setupSendCommand(yargs) {
+function _setupRegisterCommand(yargs) {
   return yargs
-    .option('send', {
-      alias: 's',
-      describe: 'Send to network',
+    .option('register', {
+      alias: 'r',
+      describe: 'Register a DID on the ledger',
       type: 'boolean',
       default: false
     });
@@ -124,37 +124,37 @@ function _setupExamples(yargs, cmd) {
     'Show help and more examples for COMMAND');
 
   example(
-    ['main', 'create'],
-    '$0 create',
-    'Create a local DID');
+    ['main', 'generate'],
+    '$0 generate',
+    'Generate a local DID');
   example(
-    ['create'],
-    '$0 create -p toomanysecrets',
-    'Create a DID with a passphrase');
+    ['generate'],
+    '$0 generate -p toomanysecrets',
+    'Generate a DID with a passphrase');
   example(
-    ['create'],
-    '$0 create -m dev -t rsa -s',
-    'Create a DID and send to development ledger');
+    ['generate'],
+    '$0 generate -m dev -t rsa -s',
+    'Generate a DID and register on development ledger');
   example(
-    ['main', 'create'],
-    '$0 create --name my-did-1 --description \'My 1st Veres One DID!\'',
-    'Create a local DID with private notes');
+    ['main', 'generate'],
+    '$0 generate --name my-did-1 --description \'My 1st Veres One DID!\'',
+    'Generate a local DID with private notes');
   example(
-    ['main', 'create'],
-    '$0 create -t rsa -s',
-    'Create a RSA DID and send to ledger');
+    ['main', 'generate'],
+    '$0 generate -t rsa -s',
+    'Generate a RSA DID and register to ledger');
   example(
-    ['create'],
-    '$0 create -s -a did:example:me -A accelerator.example.org',
-    'Create a DID and send to ledger using an accelerator');
+    ['generate'],
+    '$0 generate -s -a did:example:me -A accelerator.example.org',
+    'Generate a DID and register is using an accelerator');
   example(
-    ['create'],
-    '$0 create --no-import',
-    'Create a DID and output to stdout intead of importing it');
+    ['generate'],
+    '$0 generate --no-import',
+    'Generate a DID and output to stdout intead of importing it');
   example(
-    ['create'],
-    '$0 create --no-notes',
-    'Create a DID without creating automatic private notes');
+    ['generate'],
+    '$0 generate --no-notes',
+    'Generate a DID without creating automatic private notes');
 
   example(
     ['main', 'list'],
@@ -166,25 +166,25 @@ function _setupExamples(yargs, cmd) {
     'List filenames of local DIDs');
 
   example(
-    ['main', 'send'],
-    '$0 send did:example:1234',
+    ['main', 'register'],
+    '$0 register did:example:1234',
     'Send local DID to default ledger');
   example(
-    ['main', 'send'],
-    '$0 send -m dev <did>',
-    'Send local DID to development ledger');
+    ['main', 'register'],
+    '$0 register -m dev <did>',
+    'Register a local DID on development ledger');
   example(
-    ['main', 'send'],
-    '$0 send -m dev',
-    'Send DID from stdin to development ledger');
+    ['main', 'register'],
+    '$0 register -m dev',
+    'Register a DID from stdin to development ledger');
   example(
-    ['send'],
-    '$0 send -a did:example:me -A accelerator.example.org <did>',
-    'Send local DID to ledger using an accelerator');
+    ['register'],
+    '$0 register -a did:example:me -A accelerator.example.org <did>',
+    'Register local DID to ledger using an accelerator');
   example(
-    ['send'],
-    '$0 send --no-notes <did>',
-    'Send DID without adding private notes');
+    ['register'],
+    '$0 register --no-notes <did>',
+    'Register a DID without adding private notes');
 
   example(
     ['main', 'info'],
@@ -320,15 +320,15 @@ yargs
     },
     argv => manage.remove(argv))
 
-  .command(['create', 'generate'],
-    'Create a DID',
+  .command(['generate'],
+    'Generate a DID',
     yargs => {
       _setupLedgerCommand(yargs);
       _setupRemoteCommand(yargs);
-      _setupSendCommand(yargs);
+      _setupRegisterCommand(yargs);
       _setupAcceleratorCommand(yargs);
       _setupNotesCommand(yargs);
-      _setupExamples(yargs, 'create');
+      _setupExamples(yargs, 'generate');
       yargs
         .option('type', {
           alias: 't',
@@ -361,7 +361,7 @@ yargs
           nargs: 1
         });
     },
-    argv => _runLedgerCommand('create', argv))
+    argv => _runLedgerCommand('generate', argv))
 
   .command('import [filename]',
     'Import DID',
@@ -369,7 +369,7 @@ yargs
       _setupLedgerCommand(yargs);
       _setupFilenameCommand(yargs);
       _setupRemoteCommand(yargs);
-      _setupSendCommand(yargs);
+      _setupRegisterCommand(yargs);
       _setupAcceleratorCommand(yargs);
       _setupExamples(yargs, 'import');
     },
@@ -403,17 +403,17 @@ yargs
     },
     argv => _runLedgerCommand('export', argv))
 
-  .command('send [did]',
-    'Send DID to ledger',
+  .command('register [did]',
+    'Register a DID on a ledger',
     yargs => {
       _setupLedgerCommand(yargs);
       _setupDidCommand(yargs);
       _setupRemoteCommand(yargs);
       _setupAcceleratorCommand(yargs);
       _setupNotesCommand(yargs);
-      _setupExamples(yargs, 'send');
+      _setupExamples(yargs, 'register');
     },
-    argv => _runLedgerCommand('send', argv))
+    argv => _runLedgerCommand('register', argv))
 
   .command('receive <did>',
     'Receive DID from ledger',
@@ -577,7 +577,7 @@ yargs
       _setupLedgerCommand(yargs);
       _setupDidCommand(yargs);
       _setupRemoteCommand(yargs);
-      _setupSendCommand(yargs);
+      _setupRegisterCommand(yargs);
       _setupExamples(yargs, 'authn-add');
       yargs
         .option('type', {
@@ -623,7 +623,7 @@ yargs
       _setupLedgerCommand(yargs);
       _setupDidCommand(yargs);
       _setupRemoteCommand(yargs);
-      _setupSendCommand(yargs);
+      _setupRegisterCommand(yargs);
       _setupExamples(yargs, 'authn-remove');
       yargs
         .positional('key', {
@@ -639,7 +639,7 @@ yargs
       _setupLedgerCommand(yargs);
       _setupDidCommand(yargs);
       _setupRemoteCommand(yargs);
-      _setupSendCommand(yargs);
+      _setupRegisterCommand(yargs);
       _setupExamples(yargs, 'authn-rotate');
       yargs
         .positional('old-key', {
@@ -656,7 +656,7 @@ yargs
       _setupLedgerCommand(yargs);
       _setupDidCommand(yargs);
       _setupOcapCommand(yargs);
-      _setupSendCommand(yargs);
+      _setupRegisterCommand(yargs);
       _setupExamples(yargs, 'ocap-add');
     },
     argv => _runLedgerCommand('ocap-add', argv))
@@ -669,7 +669,7 @@ yargs
       _setupLedgerCommand(yargs);
       _setupDidCommand(yargs);
       //_setupOcapCommand(yargs);
-      _setupSendCommand(yargs);
+      _setupRegisterCommand(yargs);
       _setupExamples(yargs, 'ocap-revoke');
     },
     argv => _runLedgerCommand('ocap-revoke', argv))
