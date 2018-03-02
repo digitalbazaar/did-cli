@@ -6,8 +6,8 @@ A command-line client for managing Decentralized Identifiers.
  * [Installation](#installation)
  * [Usage](#usage)
    * [General](#general)
-   * [Create a DID](#create-a-did)
-   * [Send to a Ledger](#send-to-a-ledger)
+   * [Generate a DID](#generate-a-did)
+   * [Register on a Ledger](#register-on-a-ledger)
    * [DID Information](#did-information)
    * [Notes](#notes)
  * [Examples](#examples)
@@ -23,9 +23,9 @@ compiler installed:
 
     npm install did-client
     cd node_modules/did-client
-    ./did create
+    ./did generate -r
 
-To retrieve the freshly created DID:
+To retrieve the freshly generated DID:
 
     ./did get <DID>
 
@@ -99,11 +99,11 @@ connect to.  Specific hostnames can be selected with `--hostname/-H`:
 
     did COMMAND -l example -m test -H host1.example.com ...
 
-### Create a DID
+### Generate a DID
 
-A DID is created locally with the `create` command:
+A DID is generated locally with the `generate` command:
 
-    did create
+    did generate
 
 Other options:
 
@@ -112,28 +112,29 @@ Other options:
 * `--name NAME`: set a private name [note](#notes)
 * `--description DESCRIPTION`: set a private description [note](#notes)
 * `--no-notes`: don't add automatic "created" private [note](#notes)
+* `--register/-r`: register on a ledger
 
-### Send to a Ledger
+### Register on a Ledger
 
-By default `create` will only store a DID locally.  If you want to also
-immediately send it to the default Veres One testnet ledger:
+By default `generate` will only store a DID locally.  If you want to also
+immediately register it to the default Veres One testnet ledger:
 
-    did create -s
+    did generate -r
 
-You can send local DIDs to a ledger with the `send` command:
+You can register local DIDs to a ledger with the `register` command:
 
-    did send DID
+    did register DID
 
 Some ledgers may require DID authorization (this topic is outside of the scope
 of this tool).  You can specify an authorization DID key with `--auth/-a`:
 
-    did send DID -a AUTHDID
+    did register DID -a AUTHDID
 
 Some ledgers may require proof-of-work to accept a DID request.  Others may
 allow "accelerators" to be used.  These are specified with `--accelerator/-A`
-and use the same authorizaion DID:
+and require an authorizaion DID:
 
-    did send DID -a AUTHDID -A ACCELERATORHOSTNAME
+    did register DID -a AUTHDID -A ACCELERATORHOSTNAME
 
 Other options:
 
@@ -202,9 +203,9 @@ option.
     did notes --delete old-property --all
 
 You can choose any KEY values you wish, although simple strings will be easiest
-to use.  The `create` and `send` commands have an "auto" feature to write some
-notes.  The "name" note is useful to assign simple names to DIDs.  The "ledger"
-note is useful to keep track of where DIDs have been sent.
+to use.  The `generate` and `register` commands have an "auto" feature to write
+some notes.  The "name" note is useful to assign simple names to DIDs.  The
+"ledger" note is useful to keep track of where DIDs have been sent.
 
     $ did notes did:example:test:1234 --set name shortname
     $ did notes did:example:test:1234 --get name
@@ -229,40 +230,40 @@ to write to concurrently!
 
 ## Examples
 
-Basic create and check DID is on ledger:
+Basic generate and check DID is on ledger:
 
-    # create and send to ledger
-    did create -s # create and send to ledger
+    # generate and register on ledger
+    did generate -r # generate and register on ledger
     # wait a few moments
     # ...
     did info DID -f found -L ledger
     # should output "FOUND"!
 
-More extreme checking if ledger has multiple host info. As of this writing,
-Veres One has multiple test hosts hardcoded, but you can specifiy your own with
-multiple `-H` options:
+More extreme checking if ledger has details of multiple hosts. As of this
+writing, Veres One has multiple testnet hosts hardcoded, but you can specifiy
+your own with multiple `-H` options:
 
-    # create and send to ledger
-    did create -s # create and send to ledger
+    # generate and register on ledger
+    did generate -r # generate and register to ledger
     # check *all* local ledger hosts
     did info DID -f found -L all
 
 Depending on the ledger, you may be able to see consensus happening after a
-create:
+generate:
 
     # start a retry loop, see info --help for other options
     did info DID -f found -L all --retry
 
-Use an accelerator to create a DID faster. This assumes you have registered
+Use an accelerator to register a DID faster. This assumes you have registered
 `did:ex:my-did` at the accelerator:
 
-    did create -s -a did:ex:test:my-did -A https://accelerator.example.com/
+    did generate -r -a did:ex:test:my-did -A https://accelerator.example.com/
 
-Split creation and later send to multiple ledgers (because you are an expert
-and have solid reasons for doing this):
+Split creation and later register to multiple ledgers (because you are an
+expert and have solid reasons for doing this):
 
-    # create with a private name, do not send
-    did create --name my-did
+    # generate with a private name, do not register
+    did generate --name my-did
     # ... time passes
     # ...
     # ... grrr, I forgot the long DID name
@@ -273,10 +274,10 @@ and have solid reasons for doing this):
     ... many other DIDs with names ...
     did:example:test:1234 name my-did
     # ah! there it is!
-    # send to a ledger
-    did send did:example:test:1234
+    # register on a ledger
+    did register did:example:test:1234
     # i'd like to use on other ledgers too
-    did send -H ledger2.example.com did:example:test:1234
+    did register -H ledger2.example.com did:example:test:1234
 
 Show which DIDs have a note about being on a ledger:
 
@@ -304,9 +305,9 @@ Tips and tricks:
     ssh me@example.com did export did:example:test:1234 --private | did import
 
     # reload DIDs on a dev ledger after a wipe
-    did notes --find ledger veres:dev | xargs -I {} did send -m dev {}
+    did notes --find ledger veres:dev | xargs -I {} did register -m dev {}
     # alternative
-    for d in `did notes --find ledger veres:dev`; do did send -m dev $did; done
+    for d in `did notes --find ledger veres:dev`; do did register -m dev $did; done
 
 ## Roadmap
 
