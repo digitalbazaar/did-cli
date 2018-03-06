@@ -46,7 +46,7 @@ To retrieve the freshly generated DID:
 Install in a development directory:
 
     npm install did-client
-    ./node\_modules/.bin/did ...
+    ./node_modules/.bin/did ...
 
 Install globally:
 
