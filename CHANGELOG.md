@@ -4,7 +4,10 @@
 - Structure to support multiple ledgers.
 - More commands.
 - Add config system.
+
+### Changed
 - Update for latest Veres One API.
+- Many many other updates.
 
 ## 0.2.0 - 2018-02-24
 
