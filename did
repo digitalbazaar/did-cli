@@ -686,6 +686,8 @@ yargs
   })
   */
   .demandCommand(1, 'Please specify a command to execute.')
+  .recommendCommands()
+  .strict()
   .help('h')
   .alias('h', 'help')
   .count('v')
