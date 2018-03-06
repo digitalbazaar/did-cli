@@ -10,6 +10,7 @@ A command-line client for managing Decentralized Identifiers.
    * [Register on a Ledger](#register-on-a-ledger)
    * [DID Information](#did-information)
    * [Notes](#notes)
+   * [Key Management](#key-management)
  * [Examples](#examples)
  * [Roadmap](#roadmap)
  * [Support](#support)
@@ -229,6 +230,37 @@ The notes data is stored in the `config.jsonld` file in your local DID dir.  It
 can be freely edited as needed.  **Warning**: This file is *not* currently safe
 to write to concurrently!
 
+### Key Management
+
+A DID has a number of application suite paramters that can store keys.  Keys
+are managed with the with the `authn-*` commands.  To inspect the keys use
+`info`:
+
+    # show the DID JSON including keys
+    did info did:example:1234
+
+    # show more readable summary
+    did info did:example:1234 -f human
+
+    # show summary with public keys
+    did info did:example:1234 -f human --public-key
+
+    # show local summary with private keys
+    did info did:example:1234 -f human -L local --private-key
+
+Key material can be added and removed with `authn-add` and `authn-remove`.  A
+unique key id will be generated.  Note that the updates will be automatically
+registered on the ledger unless `--no-register` is provided:
+
+    # add a public key
+    did authn-add did:example:1234 -p PUBLICKEYINFO
+
+    # add a public and private key
+    did authn-add did:example:1234 -p PUBLICKEYINFO -P PRIVATEKEYINFO
+
+    # remove a key
+    did authn-remove did:example:1234 did:example:1234#authn-key-123
+
 ## Examples
 
 Basic generate and check DID is on ledger:
@@ -314,7 +346,7 @@ Tips and tricks:
 
 There are plans to support the following other commands and features:
 
-  * Adding, rotating, and removing authentication credentials
+  * Rotating authentication credentials
   * Adding and removing authorization capability descriptions
   * Adding and removing service descriptions
   * Checking the validity of a DID (deep blockchain check)

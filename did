@@ -276,13 +276,13 @@ function _setupExamples(yargs, cmd) {
 
   example(
     ['authn-add'],
-    '$0 authn-add did:example:1234',
-    'Add DID authentication key');
+    '$0 authn-add did:example:1234 -p PUBLICKEYINFO',
+    'Add public authentication key to DID');
 
   example(
     ['authn-remove'],
-    '$0 authn-remove did:example:1234',
-    'Remove DID authentication key');
+    '$0 authn-remove did:example:1234 did:example:1234#authn-key-7',
+    'Remove authentication key from DID');
 
   example(
     ['authn-rotate'],
