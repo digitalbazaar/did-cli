@@ -38,7 +38,7 @@ To retrieve the freshly generated DID:
   * g++ to build native Equihash binaries
 * Mac OS X
   * X Code 9 to build native Equihash binaries
-* Node.js >= 8.9.x
+* Node.js >= 8.6.x
 * npm >= 3.x
 
 ### Install
