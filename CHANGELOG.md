@@ -1,5 +1,7 @@
 # did-client ChangeLog
 
+## 0.3.0 - 2018-03-06
+
 ### Added
 - Structure to support multiple ledgers.
 - More commands.
