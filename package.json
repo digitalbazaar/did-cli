@@ -36,7 +36,7 @@
     "proper-lockfile": "^3.0.2",
     "r2": "^2.0.0",
     "util.promisify": "^1.0.0",
-    "yargs": "^11.0.0"
+    "yargs": "^11.1.0"
   },
   "engines": {
     "node": ">=8.6.0"
