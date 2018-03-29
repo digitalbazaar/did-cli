@@ -133,7 +133,7 @@ of this tool).  You can specify an authorization DID key with `--auth/-a`:
 
 Some ledgers may require proof-of-work to accept a DID request.  Others may
 allow "accelerators" to be used.  These are specified with `--accelerator/-A`
-and require an authorizaion DID:
+and require an authorization DID:
 
     did register DID -a AUTHDID -A ACCELERATORHOSTNAME
 
@@ -232,7 +232,7 @@ to write to concurrently!
 
 ### Key Management
 
-A DID has a number of application suite paramters that can store keys.  Keys
+A DID has a number of application suite parameters that can store keys.  Keys
 are managed with the with the `authn-*` commands.  To inspect the keys use
 `info`:
 
@@ -273,7 +273,7 @@ Basic generate and check DID is on ledger:
     # should output "FOUND"!
 
 More extreme checking if ledger has details of multiple hosts. As of this
-writing, Veres One has multiple testnet hosts hardcoded, but you can specifiy
+writing, Veres One has multiple testnet hosts hardcoded, but you can specify
 your own with multiple `-H` options:
 
     # generate and register on ledger
