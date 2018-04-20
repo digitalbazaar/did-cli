@@ -288,6 +288,17 @@ function _setupExamples(yargs, cmd) {
     ['authn-rotate'],
     '$0 authn-rotate did:example:1234',
     'Rotate DID authentication key');
+
+  example(
+    ['service-add'],
+    '$0 service-add did:example:1234 ' +
+    'service-name urn:type https://example.com/endpoint',
+    'Add service endpoint to DID');
+
+  example(
+    ['service-remove'],
+    '$0 service-remove did:example:1234 service-name',
+    'Remove service endpoint from DID');
 }
 
 // setup the command line
@@ -677,6 +688,54 @@ yargs
     },
     argv => _runLedgerCommand('ocap-revoke', argv))
     //.option('-d, --DID', 'The DID of the object capability to revoke')
+
+  .command('service-add <did> <name> <type> <endpoint>',
+    'Add a service endpoint to a DID',
+    yargs => {
+      _setupLedgerCommand(yargs);
+      _setupDidCommand(yargs);
+      _setupRemoteCommand(yargs);
+      _setupAcceleratorCommand(yargs);
+      _setupRegisterCommand(yargs);
+      _setupExamples(yargs, 'service-add');
+      yargs
+        .positional('name', {
+          describe: 'Service name',
+          type: 'string'
+        })
+        .positional('type', {
+          describe: 'Service type URL',
+          type: 'string'
+        })
+        .positional('type', {
+          describe: 'Service endpoint URL',
+          type: 'string'
+        })
+        .option('update', {
+          alias: 'u',
+          describe: 'Update existing service',
+          type: 'boolean',
+          default: false
+        });
+    },
+    argv => _runLedgerCommand('service-add', argv))
+
+  .command('service-remove <did> <name>',
+    'Remove a service endpoint from a DID',
+    yargs => {
+      _setupLedgerCommand(yargs);
+      _setupDidCommand(yargs);
+      _setupRemoteCommand(yargs);
+      _setupAcceleratorCommand(yargs);
+      _setupRegisterCommand(yargs);
+      _setupExamples(yargs, 'service-remove');
+      yargs
+        .positional('name', {
+          describe: 'Service name',
+          type: 'string'
+        });
+    },
+    argv => _runLedgerCommand('service-remove', argv))
 
   // general
   // FIXME: add per-command completion support
