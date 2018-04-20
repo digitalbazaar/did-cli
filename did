@@ -82,13 +82,16 @@ function _setupNotesCommand(yargs) {
     });
 }
 
-function _setupRegisterCommand(yargs) {
+function _setupRegisterCommand(yargs, register) {
+  if(typeof register === 'undefined') {
+    register = false;
+  }
   return yargs
     .option('register', {
       alias: 'r',
       describe: 'Register a DID on the ledger',
       type: 'boolean',
-      default: false
+      default: register
     });
 }
 
@@ -696,7 +699,7 @@ yargs
       _setupDidCommand(yargs);
       _setupRemoteCommand(yargs);
       _setupAcceleratorCommand(yargs);
-      _setupRegisterCommand(yargs);
+      _setupRegisterCommand(yargs, true);
       _setupExamples(yargs, 'service-add');
       yargs
         .positional('name', {
@@ -727,7 +730,7 @@ yargs
       _setupDidCommand(yargs);
       _setupRemoteCommand(yargs);
       _setupAcceleratorCommand(yargs);
-      _setupRegisterCommand(yargs);
+      _setupRegisterCommand(yargs, true);
       _setupExamples(yargs, 'service-remove');
       yargs
         .positional('name', {
