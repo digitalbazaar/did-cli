@@ -1,5 +1,7 @@
 # did-client ChangeLog
 
+## 0.3.1 - 2018-04-26
+
 ### Fixed
 - Fix typos.
 - Only RSA authentication keys currently supported.
