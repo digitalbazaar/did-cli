@@ -144,16 +144,16 @@ function _setupExamples(yargs, cmd) {
     'Generate a local DID with private notes');
   example(
     ['main', 'generate'],
-    '$0 generate -t rsa -j',
-    'Generate a RSA DID and register to ledger');
+    '$0 generate -t rsa -r',
+    'Generate a RSA DID and register on ledger');
   example(
     ['generate'],
     '$0 generate -r -a did:example:me -A accelerator.example.org',
-    'Generate a DID and register is using an accelerator');
+    'Generate a DID and register it using an accelerator');
   example(
     ['generate'],
     '$0 generate --no-import',
-    'Generate a DID and output to stdout intead of importing it');
+    'Generate a DID and output to stdout instead of importing it');
   example(
     ['generate'],
     '$0 generate --no-notes',
@@ -165,7 +165,7 @@ function _setupExamples(yargs, cmd) {
     'List local DIDs');
   example(
     ['main', 'list'],
-    '$0 list --filenames',
+    '$0 list --filename',
     'List filenames of local DIDs');
 
   example(
