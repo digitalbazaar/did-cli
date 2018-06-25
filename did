@@ -610,10 +610,10 @@ yargs
           choices: [
             'authn',
             'authentication',
-            'grant',
-            'grantCapability',
+            'capabilityDelegation',
+            'capabilityInvocation',
+            'delegate',
             'invoke',
-            'invokeCapability'
           ],
           default: 'authentication'
         })
