@@ -11,6 +11,7 @@ A command-line client for managing Decentralized Identifiers.
    * [DID Information](#did-information)
    * [Notes](#notes)
    * [Key Management](#key-management)
+   * [Service Endpoints](#service-endpoints)
  * [Examples](#examples)
  * [Roadmap](#roadmap)
  * [Support](#support)
@@ -260,6 +261,28 @@ registered on the ledger unless `--no-register` is provided:
 
     # remove a key
     did authn-remove did:example:1234 did:example:1234#authn-key-123
+
+### Service Endpoints
+
+A DID can include service endpoints.  These are managed with the `service-*`
+commands.  To inspect the services use `info`:
+
+    # show the DID JSON including services
+    did info did:example:1234
+
+Services are added and removed with `service-add` and `service-remove`.  Adding
+a service endpoint requires a unique string name, a service type URL, and the
+service endpoint URL.  Note that the updates will be automatically registered
+on the ledger unless `--no-register` is provided:
+
+    # add a service endpoint
+    did service-add did:example:1234 my-service urn:type https://example.com/endpoint
+
+    # update a service endpoint
+    did service-add -u did:example:1234 my-service urn:newtype https://example.com/newendpoint
+
+    # remove a service endpoint
+    did service-remove did:example:1234 my-service
 
 ## Examples
 
