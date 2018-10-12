@@ -711,10 +711,6 @@ yargs
           describe: 'Service type URL',
           type: 'string'
         })
-        .positional('type', {
-          describe: 'Service endpoint URL',
-          type: 'string'
-        })
         .option('update', {
           alias: 'u',
           describe: 'Update existing service',
