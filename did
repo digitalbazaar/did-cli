@@ -8,6 +8,7 @@ const drivers = require('./lib');
 const manage = require('./lib/manage');
 const yargs = require('yargs');
 const {join} = require('path');
+const dids = require('did-io');
 
 const {homepage} = require(join(__dirname, 'package.json'));
 
@@ -777,9 +778,12 @@ process.on('unhandledRejection', error => {
 function _runLedgerCommand(command, argv) {
   try {
     const driver = drivers[argv.ledger];
-    if(!driver) {
+    const method = dids.methods[argv.ledger];
+    if(!driver || !method) {
       throw new Error(`"${argv.ledger}" ledger not supported`);
     }
+    const client = method({mode: argv.mode, hostname: argv.hostname})
+
     if(argv.verbose >= 1) {
       console.log(
         `Executing "${command}" using ledger "${argv.ledger}"...`);
@@ -788,7 +792,7 @@ function _runLedgerCommand(command, argv) {
     if(!api) {
       throw new Error(`"${command}" not implemented`);
     }
-    api(argv);
+    api(argv, client);
   } catch(e) {
     console.error(e);
   }
