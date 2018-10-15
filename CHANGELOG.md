@@ -1,5 +1,10 @@
 # did-client ChangeLog
 
+## 0.4.0
+
+### Changed
+- Renamed this library from `did-client` to `did-cli`.
+
 ## 0.3.0 - 2018-03-06
 
 ### Added

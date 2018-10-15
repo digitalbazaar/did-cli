@@ -1,5 +1,5 @@
 {
-  "name": "did-client",
+  "name": "did-cli",
   "version": "0.3.1-0",
   "description": "A program for managing Decentralized Identifiers (DIDs).",
   "main": "./did",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/digitalbazaar/did-client.git"
+    "url": "https://github.com/digitalbazaar/did-cli.git"
   },
   "author": {
     "name": "Digital Bazaar, Inc.",
@@ -16,9 +16,9 @@
     "url": "https://digitalbazaar.com/"
   },
   "bugs": {
-    "url": "https://github.com/digitalbazaar/did-client/issues"
+    "url": "https://github.com/digitalbazaar/did-cli/issues"
   },
-  "homepage": "https://github.com/digitalbazaar/did-client",
+  "homepage": "https://github.com/digitalbazaar/did-cli",
   "dependencies": {
     "chalk": "^2.4.1",
     "did-io": "digitalbazaar/did-io#extract",

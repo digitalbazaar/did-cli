@@ -1,4 +1,4 @@
-# did-client
+# did-cli
 
 A command-line client for managing Decentralized Identifiers.
 
@@ -23,8 +23,8 @@ ledger as well as the retrieval of those DIDs from the Testnet. You can try the
 tool out by doing the following commands on a system that has node.js and a C++
 compiler installed:
 
-    npm install did-client
-    cd node_modules/did-client
+    npm install did-cli
+    cd node_modules/did-cli
     ./did generate -r
 
 To retrieve the freshly generated DID:
@@ -46,24 +46,24 @@ To retrieve the freshly generated DID:
 
 Install in a development directory:
 
-    npm install did-client
+    npm install did-cli
     ./node_modules/.bin/did ...
 
 Install globally:
 
-    npm install -g did-client
+    npm install -g did-cli
     did ...
 
 Run from npx:
 
-    npx did-client ...
+    npx did-cli ...
 
 ### Developing
 
 To download the source and install the client:
 
-    git clone https://github.com/digitalbazaar/did-client.git
-    cd did-client
+    git clone https://github.com/digitalbazaar/did-cli.git
+    cd did-cli
     npm install
     ./did ...
 
@@ -378,7 +378,7 @@ There are plans to support the following other commands and features:
 
 Bugs, suggestions, requests, and code issues:
 
-  * https://github.com/digitalbazaar/did-client/issues
+  * https://github.com/digitalbazaar/did-cli/issues
 
 Commercial support is available upon request from [Digital Bazaar][]:
 
