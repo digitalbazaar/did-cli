@@ -1,5 +1,11 @@
 # did-client ChangeLog
 
+## 0.3.2 - 2018-11-05
+
+### Fixed
+
+- Fix dependencies to work with current Testnet.
+
 ## 0.3.1 - 2018-04-26
 
 ### Fixed
