@@ -1,6 +1,6 @@
 {
   "name": "did-client",
-  "version": "0.3.2-0",
+  "version": "0.3.2",
   "description": "A program for managing Decentralized Identifiers (DIDs).",
   "main": "./did",
   "bin": {
