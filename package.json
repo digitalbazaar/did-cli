@@ -28,7 +28,6 @@
     "get-stdin": "^5.0.1",
     "glob": "^7.1.2",
     "jsonld": "^1.0.1",
-    "jsonld-signatures": "^2.2.1",
     "lodash": "^4.17.0",
     "mkdirp-promise": "^5.0.1",
     "node-forge": "^0.7.2",
