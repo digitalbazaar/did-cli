@@ -22,7 +22,7 @@
   "dependencies": {
     "chalk": "^2.3.1",
     "did-client-veres-one": "veres-one/did-client-veres-one#v1.0.0",
-    "did-veres-one": "veres-one/did-veres-one#targetNodePlus",
+    "did-veres-one": "^4.0.0",
     "equihash-signature": "digitalbazaar/equihash-signature#master",
     "fs-extra": "^5.0.0",
     "get-stdin": "^5.0.1",
