@@ -248,18 +248,13 @@ are managed with the with the `authn-*` commands.  To inspect the keys use
     # show local summary with private keys
     did info did:example:1234 -f human -L local --private-key
 
-Key material can be added and removed with `authn-add` and `authn-remove`.  A
-unique key id will be generated.  Note that the updates will be automatically
+Key material can be added with `ed25519-key-add`.  A unique cryptonym key id
+will be generated.  Note that the updates will be automatically
 registered on the ledger unless `--no-register` is provided:
 
-    # add a public key
-    did authn-add did:example:1234 -p PUBLICKEYINFO
-
     # add a public and private key
-    did authn-add did:example:1234 -p PUBLICKEYINFO -P PRIVATEKEYINFO
-
-    # remove a key
-    did authn-remove did:example:1234 did:example:1234#authn-key-123
+    did ed25519-key-add did:example:1234 -p authentication --pub PUBLICKEYINFO \
+    --pvt PRIVATEKEYINFO
 
 ## Examples
 

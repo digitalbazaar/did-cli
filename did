@@ -275,19 +275,10 @@ function _setupExamples(yargs, cmd) {
     'Export private DID document to stdout');
 
   example(
-    ['authn-add'],
-    '$0 authn-add did:example:1234 -p PUBLICKEYINFO',
+    ['ed25519-key-add'],
+    '$0 ed25519-key-add did:example:1234 -p authentication ' +
+      '--pub PUBLICKEYINFO --pvt PRIVATEKEYINFO',
     'Add public authentication key to DID');
-
-  example(
-    ['authn-remove'],
-    '$0 authn-remove did:example:1234 did:example:1234#authn-key-7',
-    'Remove authentication key from DID');
-
-  example(
-    ['authn-rotate'],
-    '$0 authn-rotate did:example:1234',
-    'Rotate DID authentication key');
 }
 
 // setup the command line
@@ -571,52 +562,40 @@ yargs
     },
     argv => _runLedgerCommand('notes', argv))
 
-  .command('authn-add <did>',
-    'Add an authentication key to a DID',
+  .command('ed25519-key-add <did>',
+    'Add an ed25519 verification method to a DID',
     yargs => {
       _setupLedgerCommand(yargs);
       _setupDidCommand(yargs);
       _setupRemoteCommand(yargs);
       _setupAcceleratorCommand(yargs);
       _setupRegisterCommand(yargs);
-      _setupExamples(yargs, 'authn-add');
+      _setupExamples(yargs, 'ed25519-key-add');
       yargs
-        .option('type', {
-          alias: 't',
-          describe: 'Key type',
+        .option('purpose', {
+          alias: 'p',
+          describe: 'Proof purpose',
           choices: [
-            'ed25519',
-            'rsa'
-          ],
-          default: 'ed25519'
-        })
-        .option('suite', {
-          alias: 'S',
-          describe: 'Suite type',
-          choices: [
-            'authn',
             'authentication',
-            'grant',
-            'grantCapability',
-            'invoke',
-            'invokeCapability'
-          ],
-          default: 'authentication'
+            'capabilityDelegation',
+            'capablityInvocation',
+          ]
         })
         .option('public', {
-          alias: 'p',
-          describe: 'Public key material',
+          alias: 'pub',
+          describe: 'Base58 encoded public key material',
           type: 'string',
           nargs: 1
         })
         .option('private', {
-          alias: 'P',
-          describe: 'Private key material',
+          alias: 'pvt',
+          describe: 'Base58 encoded private key material',
           type: 'string',
           nargs: 1
-        });
+        })
+        .demandOption(['purpose', 'public', 'private']);
     },
-    argv => _runLedgerCommand('authn-add', argv))
+    argv => _runLedgerCommand('ed25519-key-add', argv))
 
   .command('authn-remove <did> <key>',
     'Remove an existing DID authentication key',
