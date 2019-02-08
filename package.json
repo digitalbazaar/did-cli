@@ -33,7 +33,6 @@
     "node-forge": "^0.7.2",
     "program": "^1.0.0",
     "proper-lockfile": "^3.0.2",
-    "r2": "^2.0.0",
     "yargs": "^11.1.0"
   },
   "engines": {
