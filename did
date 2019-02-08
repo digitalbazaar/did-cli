@@ -279,13 +279,19 @@ function _setupExamples(yargs, cmd) {
     '$0 ed25519-key-add did:example:1234 -p authentication ' +
       '--pub PUBLICKEYINFO --pvt PRIVATEKEYINFO',
     'Add public authentication key to DID');
+
+  example(
+    ['service-add'],
+    '$0 service-add did:example:1234 -f myservice -e https://example.com ' +
+    '-t urn:myservicetype',
+    'Add a service descriptor to a DID');
 }
 
 // setup the command line
 yargs
-  // FIXME: output prolog help text
-  //.usage('$0 <command>',
-  //  'A program to manage Decentralized Identifiers (DIDs)')
+// FIXME: output prolog help text
+//.usage('$0 <command>',
+//  'A program to manage Decentralized Identifiers (DIDs)')
 
   // accept env vars
   .env('DID_CLIENT')
@@ -416,7 +422,7 @@ yargs
     },
     argv => _runLedgerCommand('receive', argv))
 
-  /*
+/*
   .command('revoke <did>',
     'Revoke DID',
     yargs => {
@@ -642,7 +648,7 @@ yargs
       _setupExamples(yargs, 'ocap-add');
     },
     argv => _runLedgerCommand('ocap-add', argv))
-    //.option('-d, --DID', 'The DID of the invocation target')
+  //.option('-d, --DID', 'The DID of the invocation target')
 
   // FIXME
   .command('ocap-revoke <did>',
@@ -655,7 +661,39 @@ yargs
       _setupExamples(yargs, 'ocap-revoke');
     },
     argv => _runLedgerCommand('ocap-revoke', argv))
-    //.option('-d, --DID', 'The DID of the object capability to revoke')
+  //.option('-d, --DID', 'The DID of the object capability to revoke')
+
+  .command('service-add <did>',
+    'Add a service descriptor a DID',
+    yargs => {
+      _setupLedgerCommand(yargs);
+      _setupDidCommand(yargs);
+      _setupRemoteCommand(yargs);
+      // _setupAcceleratorCommand(yargs);
+      // _setupRegisterCommand(yargs);
+      _setupExamples(yargs, 'service-add');
+      yargs
+        .option('endpoint', {
+          alias: 'e',
+          describe: 'Service endpoint URI',
+          type: 'string',
+          nargs: 1,
+        })
+        .option('fragment', {
+          alias: 'f',
+          describe: 'Service identifier hash fragment',
+          type: 'string',
+          nargs: 1,
+        })
+        .option('type', {
+          alias: 't',
+          describe: 'Service type URI',
+          type: 'string',
+          nargs: 1,
+        })
+        .demandOption(['endpoint', 'fragment', 'type']);
+    },
+    argv => _runLedgerCommand('service-add', argv))
 
   // general
   // FIXME: add per-command completion support
