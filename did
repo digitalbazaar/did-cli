@@ -137,7 +137,7 @@ function _setupExamples(yargs, cmd) {
     'Generate a DID and register on development ledger');
   example(
     ['main', 'generate'],
-    '$0 generate --name my-did-1 --description \'My 1st Veres One DID!\'',
+    '$0 generate --name my-did-1 --description \'My First DID!\'',
     'Generate a local DID with private notes');
   example(
     ['main', 'generate'],
@@ -211,6 +211,7 @@ function _setupExamples(yargs, cmd) {
     '$0 info -f found -L all <did>',
     'Check local and all ledger hosts for DID.');
 
+  /* FIXME: notes will be fixed post testnet v2
   example(
     ['main', 'notes'],
     '$0 notes',
@@ -255,6 +256,7 @@ function _setupExamples(yargs, cmd) {
     ['notes'],
     '$0 notes did:example:1234 --name my-did-1 --description \'My DID!\'',
     'Set DID private notes with standard name and description');
+*/
 
   example(
     ['import'],
@@ -275,14 +277,14 @@ function _setupExamples(yargs, cmd) {
     'Export private DID document to stdout');
 
   example(
-    ['ed25519-key-add'],
-    '$0 ed25519-key-add did:example:1234 -p authentication ' +
-      '--pub PUBLICKEYINFO --pvt PRIVATEKEYINFO',
+    ['main', 'ed25519-key-add'],
+    '$0 ed25519-key-add <did> -p authentication ' +
+      '--pub <publicKeyBase58> --pvt <privateKeyBase58>',
     'Add public authentication key to DID');
 
   example(
-    ['service-add'],
-    '$0 service-add did:example:1234 -f myservice -e https://example.com ' +
+    ['main', 'service-add'],
+    '$0 service-add <did> -f myservice -e https://example.com ' +
     '-t urn:myservicetype',
     'Add a service descriptor to a DID');
 }
