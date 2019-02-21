@@ -584,7 +584,7 @@ yargs
           choices: [
             'authentication',
             'capabilityDelegation',
-            'capablityInvocation',
+            'capabilityInvocation',
           ]
         })
         .option('public', {
