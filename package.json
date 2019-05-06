@@ -36,9 +36,15 @@
     "proper-lockfile": "^3.0.2",
     "r2": "^2.0.0",
     "util.promisify": "^1.0.0",
-    "yargs": "^11.1.0"
+    "yargs": "^11.1.0",
+    "snyk": "^1.161.1"
   },
   "engines": {
     "node": ">=8.6.0"
-  }
+  },
+  "scripts": {
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
+  },
+  "snyk": true
 }
