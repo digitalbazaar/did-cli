@@ -389,6 +389,16 @@ yargs
           ],
           default: 'json'
         })
+        .option('mode', {
+          alias: 'm',
+          describe: 'Mode of operation',
+          choices: [
+            'live',
+            'test',
+            'dev'
+          ],
+          default: 'test'
+        })
         .option('private', {
           describe: 'Export private information',
           type: 'boolean',
