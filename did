@@ -2,7 +2,7 @@
 /**
  * A Decentralized Identifier client for managing DIDs.
  *
- * Copyright (c) 2017 Digital Bazaar, Inc. All rights reserved.
+ * Copyright (c) 2017-2019 Digital Bazaar, Inc. All rights reserved.
  */
 const drivers = require('./lib');
 const manage = require('./lib/manage');
@@ -127,6 +127,10 @@ function _setupExamples(yargs, cmd) {
     ['main', 'generate'],
     '$0 generate',
     'Generate a local DID');
+  example(
+    ['main', 'validate'],
+    '$0 validate',
+    'validate a DID or DID Document');
   example(
     ['generate'],
     '$0 generate -p toomanysecrets',
@@ -424,7 +428,6 @@ yargs
       _setupExamples(yargs, 'receive');
     },
     argv => _runLedgerCommand('receive', argv))
-
   /*
   .command('revoke <did>',
     'Revoke DID',
@@ -570,6 +573,23 @@ yargs
         });
     },
     argv => _runLedgerCommand('notes', argv))
+
+  .command('validate',
+    'Validate an identifier or document',
+    yargs => {
+      _setupLedgerCommand(yargs);
+      _setupDidCommand(yargs);
+      yargs
+        .option('did', {
+          describe: 'if the stdin will be a did',
+          default: false
+        })
+        .option('document', {
+          describe: 'if the stdin will be a document',
+          default: false
+        });
+    },
+    argv => _runLedgerCommand('validate', argv))
 
   .command('authn-add <did>',
     'Add an authentication key to a DID',
