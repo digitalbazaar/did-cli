@@ -587,6 +587,10 @@ yargs
         .option('document', {
           describe: 'if the stdin will be a document',
           default: false
+        })
+        .option('contexts', {
+          describe: 'a list of paths to contexts',
+          default: ''
         });
     },
     argv => _runLedgerCommand('validate', argv))
