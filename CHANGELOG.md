@@ -1,6 +1,6 @@
 # did-cli ChangeLog
 
-## 0.4.0 - TBD
+## 0.4.0 - 2019-06-19
 
 ### Changed
 - Change package name to `did-cli`.
