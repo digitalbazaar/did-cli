@@ -35,9 +35,9 @@ To retrieve the freshly generated DID:
 ### Requirements
 
 * Linux
-  * g++ to build native Equihash binaries
+  * g++ to build native binaries
 * Mac OS X
-  * X Code 9 to build native Equihash binaries
+  * X Code 9 to build native binaries
 * Node.js >= 8.6.x
 * npm >= 3.x
 
