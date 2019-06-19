@@ -1,8 +1,9 @@
-# did-client ChangeLog
+# did-cli ChangeLog
 
 ## 0.4.0 - TBD
 
 ### Changed
+- Change package name to `did-cli`.
 - Use did-veres-one@5.
 
 ### Removed
