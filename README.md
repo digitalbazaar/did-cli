@@ -28,7 +28,7 @@ compiler installed:
 
 To retrieve the freshly generated DID:
 
-    ./did get <DID>
+    ./did info <DID>
 
 ## Installation
 
