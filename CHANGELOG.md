@@ -1,5 +1,13 @@
 # did-client ChangeLog
 
+## 0.4.0 - TBD
+
+### Changed
+- Use did-veres-one@5.
+
+### Removed
+- **BREAKING**: Veres One `authn-remove` API.
+
 ## 0.3.2 - 2018-11-05
 
 ### Fixed
