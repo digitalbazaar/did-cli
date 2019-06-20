@@ -1,5 +1,11 @@
 # did-cli ChangeLog
 
+## 0.4.1 - 2019-06-20
+
+### Changed
+- Use yargs@13. The following vulnerabilities are fixed with an upgrade:
+  https://snyk.io/vuln/npm:mem:20180117
+
 ## 0.4.0 - 2019-06-19
 
 ### Changed
