@@ -1,6 +1,6 @@
-# did-cli
+# Decentralized Identifier client CLI _(did-cli)_
 
-A command-line client for managing Decentralized Identifiers.
+> A command-line client for managing Decentralized Identifiers.
 
  * [Quickstart](#quickstart)
  * [Installation](#installation)
@@ -19,8 +19,7 @@ A command-line client for managing Decentralized Identifiers.
 
 The current client supports the creation of Testnet DIDs on the Veres One
 ledger as well as the retrieval of those DIDs from the Testnet. You can try the
-tool out by doing the following commands on a system that has node.js and a C++
-compiler installed:
+tool out by doing the following commands on a system that has node.js installed:
 
     npm install did-cli
     cd node_modules/did-cli
@@ -34,10 +33,7 @@ To retrieve the freshly generated DID:
 
 ### Requirements
 
-* Linux
-  * g++ to build native binaries
-* Mac OS X
-  * X Code 9 to build native binaries
+* Linux or Mac OS X
 * Node.js >= 8.6.x
 * npm >= 3.x
 
@@ -83,7 +79,8 @@ quieted more than the default with `--quiet/-q`:
     did COMMAND -vv ...
     did COMMAND -q ...
 
-Local DID data and a config file is stored in your `$HOME/.did/` directory.
+Copies of registered DIDs, keys, and metadata are all stored in your 
+`$HOME/.dids/` directory.
 
 Remote commands operate on a ledger.  Various ledgers may be available.  They
 can be selected with the `--ledger/-l` option which defaults to `veres`.
@@ -112,7 +109,6 @@ Other options:
 * `--type/-t TYPE`: set key type (ex: `ed25519` or `rsa`)
 * `--name NAME`: set a private name [note](#notes)
 * `--description DESCRIPTION`: set a private description [note](#notes)
-* `--no-notes`: don't add automatic "created" private [note](#notes)
 * `--register/-r`: register on a ledger
 
 ### Register on a Ledger
@@ -137,13 +133,10 @@ and require an authorization DID:
 
     did register DID -a AUTHDID -A ACCELERATORHOSTNAME
 
-Other options:
-
-* `--no-notes`: don't add automatic "ledger" private [note](#notes)
-
 ### DID Information
 
-Local DIDs can be listed with the `list` command:
+Pending (created but not registered) and registered DIDs can be listed with the 
+`list` command:
 
     did list
 
