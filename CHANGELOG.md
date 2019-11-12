@@ -1,5 +1,17 @@
 # did-cli ChangeLog
 
+## 0.5.0
+
+### Changed
+- **BREAKING**: Uses `did-veres-one` v8.0, changed `capabilityAction` values 
+  in invocation proofs.
+- General refactoring.
+- **BREAKING**: Stores DID Documents and keys separately, in `~/.dids/`. See
+  docstring in `lib/storage.js` for more details.
+- **BREAKING**: No longer supports the concept of 'import' or 'export' of DIDs.
+- **BREAKING**: No longer supports registering from DID Doc via stdin (since
+  importing private keys is awkward/not possible via stdin).
+
 ## 0.4.1 - 2019-06-20
 
 ### Changed
