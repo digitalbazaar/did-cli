@@ -5,7 +5,6 @@
  * Copyright (c) 2017 Digital Bazaar, Inc. All rights reserved.
  */
 const drivers = require('./lib');
-const manage = require('./lib/manage');
 const yargs = require('yargs');
 const {join} = require('path');
 
@@ -65,13 +64,13 @@ function _setupDidCommand(yargs) {
     });
 }
 
-function _setupFilenameCommand(yargs) {
-  return yargs
-    .positional('filename', {
-      describe: 'Target filename',
-      type: 'string'
-    });
-}
+// function _setupFilenameCommand(yargs) {
+//   return yargs
+//     .positional('filename', {
+//       describe: 'Target filename',
+//       type: 'string'
+//     });
+// }
 
 function _setupNotesCommand(yargs) {
   return yargs
@@ -159,16 +158,8 @@ function _setupExamples(yargs, cmd) {
   example(
     ['main', 'list'],
     '$0 list',
-    'List local DIDs');
-  example(
-    ['main', 'list'],
-    '$0 list --filename',
-    'List filenames of local DIDs');
+    'List pending and registered DIDs');
 
-  example(
-    ['main', 'register'],
-    '$0 register did:example:1234',
-    'Send local DID to default ledger');
   example(
     ['main', 'register'],
     '$0 register -m dev <did>',
@@ -181,10 +172,6 @@ function _setupExamples(yargs, cmd) {
     ['register'],
     '$0 register -a did:example:me -A accelerator.example.org <did>',
     'Register local DID to ledger using an accelerator');
-  example(
-    ['register'],
-    '$0 register --no-notes <did>',
-    'Register a DID without adding private notes');
 
   example(
     ['main', 'info'],
@@ -257,25 +244,6 @@ function _setupExamples(yargs, cmd) {
     '$0 notes did:example:1234 --name my-did-1 --description \'My DID!\'',
     'Set DID private notes with standard name and description');
 */
-
-  example(
-    ['import'],
-    '$0 import ./my-did.json',
-    'Import a DID document from a file');
-  example(
-    ['import'],
-    '$0 import',
-    'Import a DID document from stdin');
-
-  example(
-    ['export'],
-    '$0 export did:example:1234',
-    'Export public DID document to stdout');
-  example(
-    ['export'],
-    '$0 export --private did:example:1234',
-    'Export private DID document to stdout');
-
   example(
     ['main', 'ed25519-key-add'],
     '$0 ed25519-key-add <did> -p authentication ' +
@@ -302,22 +270,16 @@ yargs
     'List local DIDs',
     yargs => {
       _setupExamples(yargs, 'list');
-      yargs
-        .option('filename', {
-          describe: 'Print storage filename',
-          type: 'boolean',
-          default: false
-        });
     },
-    argv => manage.list(argv))
+    argv => _runLedgerCommand('list', argv))
 
   .command(['remove <did>', 'rm'],
-    'Remove local DID',
+    'Remove a pending (unregistered) DID',
     yargs => {
       _setupDidCommand(yargs);
       _setupExamples(yargs, 'remove');
     },
-    argv => manage.remove(argv))
+    argv => _runLedgerCommand('remove', argv))
 
   .command('generate',
     'Generate a DID',
@@ -344,11 +306,6 @@ yargs
           type: 'string',
           nargs: 1
         })
-        .option('import', {
-          describe: 'Import generated key else write to stdout',
-          type: 'boolean',
-          default: true
-        })
         .option('name', {
           describe: 'Set DID private name note',
           type: 'string',
@@ -361,56 +318,6 @@ yargs
         });
     },
     argv => _runLedgerCommand('generate', argv))
-
-  .command('import [filename]',
-    'Import DID',
-    yargs => {
-      _setupLedgerCommand(yargs);
-      _setupFilenameCommand(yargs);
-      _setupRemoteCommand(yargs);
-      _setupRegisterCommand(yargs);
-      _setupAcceleratorCommand(yargs);
-      _setupExamples(yargs, 'import');
-    },
-    argv => _runLedgerCommand('import', argv))
-
-  .command('export <did>',
-    'Export DID',
-    yargs => {
-      _setupLedgerCommand(yargs);
-      _setupDidCommand(yargs);
-      _setupExamples(yargs, 'export');
-      yargs
-        .option('format', {
-          alias: 'f',
-          describe: 'Output data format',
-          choices: [
-            'json'
-          ],
-          default: 'json'
-        })
-        .option('mode', {
-          alias: 'm',
-          describe: 'Mode of operation',
-          choices: [
-            'live',
-            'test',
-            'dev'
-          ],
-          default: 'test'
-        })
-        .option('private', {
-          describe: 'Export private information',
-          type: 'boolean',
-          default: false
-        })
-        .option('public', {
-          describe: 'Export public information',
-          type: 'boolean',
-          default: true
-        });
-    },
-    argv => _runLedgerCommand('export', argv))
 
   .command('register [did]',
     'Register a DID on a ledger',
