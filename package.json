@@ -2,6 +2,7 @@
   "name": "did-cli",
   "version": "0.4.2-0",
   "description": "A program for managing Decentralized Identifiers (DIDs).",
+  "license": "SEE LICENSE IN LICENSE.md",  
   "main": "./did",
   "scripts": {
     "lint": "eslint lib"
