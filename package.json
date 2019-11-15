@@ -25,7 +25,7 @@
   "dependencies": {
     "chalk": "^2.4.2",
     "crypto-ld": "^3.7.0",
-    "did-veres-one": "^8.0.0",
+    "did-veres-one": "veres-one/did-veres-one#update-context",
     "flex-docstore": "^0.1.0",
     "jsonld": "^1.8.1",
     "yargs": "^14.2.0"
