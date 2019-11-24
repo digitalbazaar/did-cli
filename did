@@ -275,6 +275,7 @@ yargs
   .command(['remove <did>', 'rm'],
     'Remove a pending (unregistered) DID',
     yargs => {
+      _setupTypeCommand(yargs);
       _setupDidCommand(yargs);
       _setupExamples(yargs, 'remove');
     },
