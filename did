@@ -267,6 +267,7 @@ yargs
   .command(['list', 'ls'],
     'List pending and registered DIDs',
     yargs => {
+      _setupTypeCommand(yargs);
       _setupExamples(yargs, 'list');
     },
     argv => _runLedgerCommand('list', argv))
