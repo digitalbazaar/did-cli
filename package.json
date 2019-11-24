@@ -24,18 +24,19 @@
   },
   "homepage": "https://github.com/digitalbazaar/did-cli",
   "dependencies": {
-    "chalk": "^2.4.2",
+    "chalk": "^3.0.0",
     "crypto-ld": "^3.7.0",
     "did-veres-one": "^9.0.0",
     "flex-docstore": "^0.1.0",
+    "glob": "^7.1.6",
     "jsonld": "^1.8.1",
-    "yargs": "^14.2.0"
+    "yargs": "^15.0.2"
   },
   "engines": {
     "node": ">=8.6.0"
   },
   "devDependencies": {
-    "eslint": "^6.6.0",
+    "eslint": "^6.7.0",
     "eslint-config-digitalbazaar": "^2.0.1"
   }
 }
