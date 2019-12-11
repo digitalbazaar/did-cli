@@ -516,22 +516,20 @@ yargs
     },
     argv => _runLedgerCommand('authn-remove', argv))
 
-  .command('authn-rotate <did> <old-key>',
-    'Rotate an existing DID authentication key',
+  .command('rotate <key-id>',
+    'Rotate an existing DID key (remove it and generate a new one)',
     yargs => {
       _setupTypeCommand(yargs);
-      _setupDidCommand(yargs);
       _setupRemoteCommand(yargs);
       _setupAcceleratorCommand(yargs);
-      _setupRegisterCommand(yargs);
-      _setupExamples(yargs, 'authn-rotate');
+      _setupExamples(yargs, 'rotate');
       yargs
-        .positional('old-key', {
+        .positional('key-id', {
           describe: 'The old key identifier to rotate out',
           type: 'string'
         });
     },
-    argv => _runLedgerCommand('authn-rotate', argv))
+    argv => _runLedgerCommand('rotate', argv))
 
   // FIXME
   .command('ocap-add <did> <invoker>',
