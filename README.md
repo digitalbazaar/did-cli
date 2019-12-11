@@ -144,29 +144,6 @@ Information on a DID can be found with the `info` command:
 
     did info DID
 
-The output format can be controlled with the `--format/-f` option:
-
-* `found`: show FOUND / NOT FOUND status
-* `human`: show basic details formatted for humans
-* `json`: show data as JSON
-
-    did info DID -f json
-
-By default this command will return information from the ledger.  The location
-of information can be selected with the `--location/-L` option:
-
-* `any`: return DID if found locally, else check the ledger
-* `local`: only return local DIDs
-* `ledger`: only check the default ledger host (or many with `-H` options)
-  (**default**)
-* `both`: check both local *and* default ledger host (or many with `-H`
-  options)
-* `ledger-all`: check all known ledger hosts
-* `all`: check local *and* all known ledger hosts
-
-The `ledger-all` option and `all` options allow more insight into the state of
-a distributed ledger.  They are useful with the `-f found` option.
-
 ### Notes
 
 It can be useful to store **private** local notes about DIDs which are
@@ -257,8 +234,7 @@ Basic generate and check DID is on ledger:
     did generate -r # generate and register on ledger
     # wait a few moments
     # ...
-    did info DID -f found
-    # should output "FOUND"!
+    did info DID
 
 More extreme checking if ledger has details of multiple hosts. As of this
 writing, Veres One has multiple testnet hosts hardcoded, but you can specify
@@ -266,8 +242,7 @@ your own with multiple `-H` options:
 
     # generate and register on ledger
     did generate -r # generate and register to ledger
-    # check *all* local ledger hosts
-    did info DID -f found -L all
+    did info DID
 
 Depending on the ledger, you may be able to see consensus happening after a
 generate:
@@ -304,26 +279,7 @@ Show which DIDs have a note about being on a ledger:
 
     did notes --get ledger
 
-Show all DIDs on a specific ledger:
-
-    did notes --find ledger veres:test
-
-Export public or private DID data:
-
-    did export did:example:test:1234
-    did export did:example:test:1234 --private
-
-Import a private DID file from elsewhere:
-
-    did import ./my-did.json
-
 Tips and tricks:
-
-    # which DIDs did I register on the test ledger?
-    for did in `did list`; do echo $did; did info -f found $did; done
-
-    # import from remote site
-    ssh me@example.com did export did:example:test:1234 --private | did import
 
     # reload DIDs on a dev ledger after a wipe
     did notes --find ledger veres:dev | xargs -I {} did register -m dev {}
