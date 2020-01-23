@@ -4,7 +4,9 @@
   "description": "A program for managing Decentralized Identifiers (DIDs).",
   "main": "./did",
   "scripts": {
-    "lint": "eslint lib"
+    "lint": "eslint lib",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "bin": {
     "did": "./did"
@@ -35,7 +37,8 @@
     "node-forge": "^0.7.2",
     "program": "^1.0.0",
     "proper-lockfile": "^3.0.2",
-    "yargs": "^13.2.4"
+    "yargs": "^13.2.4",
+    "snyk": "^1.279.1"
   },
   "engines": {
     "node": ">=8.6.0"
@@ -43,5 +46,6 @@
   "devDependencies": {
     "eslint": "^5.14.1",
     "eslint-config-digitalbazaar": "^2.0.0"
-  }
+  },
+  "snyk": true
 }
