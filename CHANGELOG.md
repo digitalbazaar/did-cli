@@ -1,5 +1,10 @@
 # did-cli ChangeLog
 
+## 0.5.1 - 2020-02-19
+
+### Changed
+- Fix released tags
+
 ## 0.5.0 - 2020-02-19
 
 ### Changed
