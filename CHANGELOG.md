@@ -1,9 +1,10 @@
 # did-cli ChangeLog
 
-## 0.5.0
+## 0.5.0 - 2020-02-19
 
 ### Changed
-- **BREAKING**: Uses `did-veres-one` v8.0, changed `capabilityAction` values 
+- Upgrade to Veres One Capybara release.
+- **BREAKING**: Uses `did-veres-one` v8.0, changed `capabilityAction` values
   in invocation proofs.
 - General refactoring.
 - **BREAKING**: Stores DID Documents and keys separately, in `~/.dids/`. See
