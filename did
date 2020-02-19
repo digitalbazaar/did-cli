@@ -631,7 +631,7 @@ function _runLedgerCommand(command, argv) {
     }
     if(argv.verbose >= 1) {
       console.log(
-        `Executing "${command}" using ledger "${argv.ledger}"...`);
+        `Executing ${command} on ${argv.type} ledger in ${argv.mode} mode...`);
     }
     const api = driver[command];
     if(!api) {
