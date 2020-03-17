@@ -29,6 +29,9 @@ To retrieve the freshly generated DID:
 
     ./did info <DID>
 
+By default, keys and DID Documents will be stored in `~/.dids/<method>/<mode>/`,
+see [Setting Up Storage](STORAGE.md) for more details.
+
 ## Installation
 
 ### Requirements
