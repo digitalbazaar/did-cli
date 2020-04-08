@@ -1,4 +1,8 @@
 # did-cli ChangeLog
+## 0.6.0 - 2020-04-08
+
+### Changed
+- Upgrade all deps to latest, including `did-veres-one` `v12.0.0`.
 
 ## 0.5.1 - 2020-02-19
 
