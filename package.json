@@ -1,6 +1,6 @@
 {
   "name": "did-cli",
-  "version": "0.6.0",
+  "version": "0.6.1-0",
   "description": "A program for managing Decentralized Identifiers (DIDs).",
   "license": "BSD-3-Clause",
   "main": "./did",
