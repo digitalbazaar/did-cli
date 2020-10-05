@@ -624,6 +624,7 @@ process.on('unhandledRejection', error => {
 });
 
 function _runLedgerCommand(command, argv) {
+  console.log({command, argv});
   try {
     const driver = drivers[argv.type];
     if(!driver) {
