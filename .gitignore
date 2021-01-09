@@ -69,3 +69,4 @@ typings/
 TAGS
 reports
 .cache
+.vscode
