@@ -47,6 +47,42 @@ Help is available with the `--help/-h` command line option:
 ./did COMMAND -h
 ```
 
+### Key Pairs
+
+#### Generating a key pair
+
+To generate a new public/private key pair:
+
+```
+ ./did key create
+{
+  "keyPair": {
+    "type": "Ed25519VerificationKey2020",
+    "@context": "https://w3id.org/security/suites/ed25519-2020/v1",
+    "publicKeyMultibase": "z6MkmDMjfkjs9XPCN1LfoQQRHz1mJ8PEdiVYC66XKhj3wGyB",
+    "privateKeyMultibase": "zrv3wmB9AVHitGUTEf9MVMB6afscXMmzGY7hwuYL5gZZdspFr2DDrTA97qzZS6T1MsJM4mTKVWQWkjY5asc8FBppKt9"
+  },
+  "secretKeySeed": "z1AhV1bADy7RepJ64mvH7Kk7htFNGc7EA1WA5nGzLSTWc6o"
+}
+```
+
+If you have a secret key seed already, set the `SECRET_KEY_SEED` env variable,
+and the key pair will be deterministically generated from it:
+
+```
+SECRET_KEY_SEED=z1Ajrg3wpDYiKS1EKAZKDd8qwR5mG3wKvh6gYi5YEz9T89P ./did key create
+{
+  "keyPair": {
+    "type": "Ed25519VerificationKey2020",
+    "@context": "https://w3id.org/security/suites/ed25519-2020/v1",
+    "publicKeyMultibase": "z6Mkf9XLrKqb6kch96MU61aciKrnQwQmBnFw9MGpyqHor81V",
+    "privateKeyMultibase": "zrv4ef4DVKCmCzy9733LKCnghDP1mytArm7Jddtnq54M1sVThc95bxJ2H4TiuWXRChjGHWtocqKciPrnqUBAatLUKqq"
+  },
+  "secretKeySeed": "z1Ajrg3wpDYiKS1EKAZKDd8qwR5mG3wKvh6gYi5YEz9T89P"
+}
+
+```
+
 ## Contribute
 
 See [the contribute file](https://github.com/digitalbazaar/bedrock/blob/master/CONTRIBUTING.md)!
