@@ -12,7 +12,6 @@ main();
 
 async function main() {
   const cli = yargs
-    .middleware(didCli.setupFetch)
     .usage('Usage: $0 <command>')
     .option('config', {
       describe: 'Configuration file path.',
