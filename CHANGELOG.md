@@ -1,4 +1,10 @@
 # did-cli ChangeLog
+
+## 1.0.0 -
+
+### Changed
+- **BREAKING**: Rewrite.
+
 ## 0.6.0 - 2020-04-08
 
 ### Changed
