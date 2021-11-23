@@ -1,6 +1,6 @@
 # Decentralized Identifier client CLI _(did-cli)_
 
-> A command line client for managing DIDs, VCs, zCaps, and corresponding cryptographic keys.
+> A command line client for managing DIDs, VCs, zCaps, and corresponding cryptographic key pairs.
 
 ## Table of Contents
 
@@ -47,6 +47,74 @@ Help is available with the `--help/-h` command line option:
 ./did COMMAND -h
 ```
 
+### Decentralized Identifiers (DIDs)
+
+#### `did:key` Method - Create
+
+To generate a new `did:key` DID:
+
+```
+./did id create --method <method>
+```
+
+Options:
+
+* `method` - Supported methods: 'key' (`did:key`). Default: 'key'.
+
+Examples:
+
+```
+./did id create
+{
+  "id": "did:key:z6Mkfeco2NSEPeFV3DkjNSabaCza1EoS3CmqLb1eJ5BriiaR",
+  "secretKeySeed": "z1AZK4h5w5YZkKYEgqtcFfvSbWQ3tZ3ZFgmLsXMZsTVoeK7",
+  "didDocument": {
+    "@context": [
+      "https://www.w3.org/ns/did/v1",
+      "https://w3id.org/security/suites/ed25519-2020/v1",
+      "https://w3id.org/security/suites/x25519-2020/v1"
+    ],
+    "id": "did:key:z6Mkfeco2NSEPeFV3DkjNSabaCza1EoS3CmqLb1eJ5BriiaR",
+    "verificationMethod": [
+      {
+        "id": "did:key:z6Mkfeco2NSEPeFV3DkjNSabaCza1EoS3CmqLb1eJ5BriiaR#z6Mkfeco2NSEPeFV3DkjNSabaCza1EoS3CmqLb1eJ5BriiaR",
+        "type": "Ed25519VerificationKey2020",
+        "controller": "did:key:z6Mkfeco2NSEPeFV3DkjNSabaCza1EoS3CmqLb1eJ5BriiaR",
+        "publicKeyMultibase": "z6Mkfeco2NSEPeFV3DkjNSabaCza1EoS3CmqLb1eJ5BriiaR"
+      }
+    ],
+    "authentication": [
+      "did:key:z6Mkfeco2NSEPeFV3DkjNSabaCza1EoS3CmqLb1eJ5BriiaR#z6Mkfeco2NSEPeFV3DkjNSabaCza1EoS3CmqLb1eJ5BriiaR"
+    ],
+    "assertionMethod": [
+      "did:key:z6Mkfeco2NSEPeFV3DkjNSabaCza1EoS3CmqLb1eJ5BriiaR#z6Mkfeco2NSEPeFV3DkjNSabaCza1EoS3CmqLb1eJ5BriiaR"
+    ],
+    "capabilityDelegation": [
+      "did:key:z6Mkfeco2NSEPeFV3DkjNSabaCza1EoS3CmqLb1eJ5BriiaR#z6Mkfeco2NSEPeFV3DkjNSabaCza1EoS3CmqLb1eJ5BriiaR"
+    ],
+    "capabilityInvocation": [
+      "did:key:z6Mkfeco2NSEPeFV3DkjNSabaCza1EoS3CmqLb1eJ5BriiaR#z6Mkfeco2NSEPeFV3DkjNSabaCza1EoS3CmqLb1eJ5BriiaR"
+    ],
+    "keyAgreement": [
+      {
+        "id": "did:key:z6Mkfeco2NSEPeFV3DkjNSabaCza1EoS3CmqLb1eJ5BriiaR#z6LSiMBrnXGbSJ6ZGQ3yRu8F8y75oR85fpq6NBrxHUjB4M3A",
+        "type": "X25519KeyAgreementKey2020",
+        "controller": "did:key:z6Mkfeco2NSEPeFV3DkjNSabaCza1EoS3CmqLb1eJ5BriiaR",
+        "publicKeyMultibase": "z6LSiMBrnXGbSJ6ZGQ3yRu8F8y75oR85fpq6NBrxHUjB4M3A"
+      }
+    ]
+  }
+}
+```
+
+If you have a secret key seed already, set the `SECRET_KEY_SEED` env variable,
+and the DID will be deterministically generated from it:
+
+```
+SECRET_KEY_SEED=z1AZK4h5w5YZkKYEgqtcFfvSbWQ3tZ3ZFgmLsXMZsTVoeK7 ./did id create
+// same as previous example
+```
+
 ### Key Pairs
 
 #### Generating a key pair
@@ -56,13 +124,13 @@ To generate a new public/private key pair:
 ```
  ./did key create
 {
+  "secretKeySeed": "z1AhV1bADy7RepJ64mvH7Kk7htFNGc7EA1WA5nGzLSTWc6o",
   "keyPair": {
     "type": "Ed25519VerificationKey2020",
     "@context": "https://w3id.org/security/suites/ed25519-2020/v1",
     "publicKeyMultibase": "z6MkmDMjfkjs9XPCN1LfoQQRHz1mJ8PEdiVYC66XKhj3wGyB",
     "privateKeyMultibase": "zrv3wmB9AVHitGUTEf9MVMB6afscXMmzGY7hwuYL5gZZdspFr2DDrTA97qzZS6T1MsJM4mTKVWQWkjY5asc8FBppKt9"
-  },
-  "secretKeySeed": "z1AhV1bADy7RepJ64mvH7Kk7htFNGc7EA1WA5nGzLSTWc6o"
+  }
 }
 ```
 
@@ -72,13 +140,13 @@ and the key pair will be deterministically generated from it:
 ```
 SECRET_KEY_SEED=z1Ajrg3wpDYiKS1EKAZKDd8qwR5mG3wKvh6gYi5YEz9T89P ./did key create
 {
+  "secretKeySeed": "z1Ajrg3wpDYiKS1EKAZKDd8qwR5mG3wKvh6gYi5YEz9T89P",
   "keyPair": {
     "type": "Ed25519VerificationKey2020",
     "@context": "https://w3id.org/security/suites/ed25519-2020/v1",
     "publicKeyMultibase": "z6Mkf9XLrKqb6kch96MU61aciKrnQwQmBnFw9MGpyqHor81V",
     "privateKeyMultibase": "zrv4ef4DVKCmCzy9733LKCnghDP1mytArm7Jddtnq54M1sVThc95bxJ2H4TiuWXRChjGHWtocqKciPrnqUBAatLUKqq"
-  },
-  "secretKeySeed": "z1Ajrg3wpDYiKS1EKAZKDd8qwR5mG3wKvh6gYi5YEz9T89P"
+  }
 }
 ```
 

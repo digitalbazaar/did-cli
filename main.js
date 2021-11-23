@@ -3,7 +3,8 @@
  */
 
 import * as key from './lib/key/cli.js';
+import * as id from './lib/id/cli.js';
 
 export {
-  key
+  key, id
 };

@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/digitalbazaar/did-cli",
   "dependencies": {
+    "@digitalbazaar/did-method-key": "^2.0.0",
     "@digitalbazaar/ed25519-verification-key-2020": "^3.2.0",
     "bnid": "^2.1.0",
     "chalk": "^4.0.0",
