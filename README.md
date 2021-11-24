@@ -259,6 +259,51 @@ SECRET_KEY_SEED=z1Ajrg3wpDYiKS1EKAZKDd8qwR5mG3wKvh6gYi5YEz9T89P ./did key create
 }
 ```
 
+### Anchored Resources
+
+Parameters:
+- Input: Either pass in a `--file` parameter, pipe something in via `stdin`,
+  or provide a `--url` parameter (which will be fetched).
+- `--file, -f` - Optional input file containing the resource to be anchored/hashed.
+- `--canonicalize` - Optional `canonicalizationAlgorithm` value. The resource
+  to be anchored will first be canonicalized with this algorithm. For JSON or
+  JSON-LD type resources, the default algorithm is `jcs`.
+- `url` - Optional URL parameter for the anchored resource. If no input `--file`
+  or `stin` value is specified, the CLI will attempt to retrieve the resource
+  at the `url`.
+- Id: If a `url` param is provided, it will be used as the `anchoredResource.id`.
+  Otherwise, the CLI will use the `id` property of the input resource.
+  If neither exists (or if the resource is not a JSON object), no id will be
+  used.
+
+#### Creating an `anchoredResource`
+
+To create an anchored resource (which includes a content hash and
+a canonicalization algorithm): 
+
+```
+./did anchor create -f example-vc.json --canonicalize jcs
+{
+  "id": "<id of the object in example-vc.json>",
+  "canonicalizationAlgorithm": "jcs",
+  "contentHash": "z1Aaj5A4UCsdMpXwdYAReXa4bxWYiKJtdAvB1zMzCHtCbtD"
+}
+```
+
+#### Verifying an `anchoredResource`
+
+```
+./did anchor verify -f example-vc.json --contentHash z1Aaj5A4UCsdMpXwdYAReXa4bxWYiKJtdAvB1zMzCHtCbtD
+{
+  "verified": true
+}
+# or
+{
+  "verified": false,
+  "error": "Provided content hash does not match the hash of the resource."
+}
+```
+
 ## Contribute
 
 See [the contribute file](https://github.com/digitalbazaar/bedrock/blob/master/CONTRIBUTING.md)!
