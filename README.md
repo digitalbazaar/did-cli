@@ -115,9 +115,38 @@ SECRET_KEY_SEED=z1AZK4h5w5YZkKYEgqtcFfvSbWQ3tZ3ZFgmLsXMZsTVoeK7 ./did id create
 // same as previous example
 ```
 
+### zCaps (Authorization Capabilities)
+
+#### Creating a Root zCap
+
+To create a root zcap that allows `read` and `write` actions to the 
+`https://example.com/api` URL:
+
+```
+ZCAP_CONTROLLER_KEY_SEED=z1AZK4h5w5YZkKYEgqtcFfvSbWQ3tZ3ZFgmLsXMZsTVoeK7 \
+  ./did zcap create \
+  --controller 'did:key:z6Mkfeco2NSEPeFV3DkjNSabaCza1EoS3CmqLb1eJ5BriiaR' \
+  --url 'https://example.com/api' \
+  --allow read --allow write
+{
+  "rootCapability": {
+    "@context": [
+      "https://w3id.org/zcap/v1",
+      "https://w3id.org/security/suites/ed25519-2020/v1"
+    ],
+    "id": "urn:zcap:root:https%3A%2F%2Fexample.com%2Fapi",
+    "controller": "did:key:z6Mkfeco2NSEPeFV3DkjNSabaCza1EoS3CmqLb1eJ5BriiaR",
+    "invocationTarget": "https://example.com/api",
+    "expires": "2022-11-24T01:17:08Z",
+    "allowedAction": ["read","write"]
+  },
+  "encoded": "zNWGiLJ6SHV1Zcwjyu5Rx6Nm1kWG9pY69JS9v2JP587j3qPHJ1jo4NemN6V6iCbFjhonKJPEnFSrA4ydfDQFs7ZziMqAcLRGLv95TYK2eXy9RjMLYczjBd4Xq3hgxPBrq9VtcGSXgo5VtB2FRkaFgdNnnbjWDHHG9Ns3ExdzZTtG1HBntKTjbbF75FC6E6kcqMVwUw9r6ZSq6JwedHAhPkY6rFRW8cEi5tGhh486cHWxGUJzJjCQzt7WkW8UwTE2TLzsuQeNKN2qLu2YoWNcfXLwVt7HSmJqwbSD7xPnpAN3X9LKJMhjBsNdmXZpzygfUvmB9NkskKYXYiTX9hgfGdX5JEBrQU4UNSN6J2aoukJX4KrvJozsMcWsziNjXqbnFi6JoCMz61AwZTksxdJbYiTVADoMJsAtnqmrdjccoWLMWfeHnZsxraUe3Zd48fe1A"
+}
+```
+
 ### Key Pairs
 
-#### Generating a key pair
+#### Generating a Key Pair
 
 To generate a new public/private key pair:
 
