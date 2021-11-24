@@ -21,6 +21,7 @@ async function main() {
 
   didCli.key.command(cli);
   didCli.id.command(cli);
+  didCli.zcap.command(cli);
 
   cli.argv;
 }
