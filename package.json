@@ -30,6 +30,7 @@
     "@digitalbazaar/ed25519-signature-2020": "^3.0.0",
     "@digitalbazaar/ed25519-verification-key-2020": "^3.2.0",
     "@digitalbazaar/ezcap": "^1.0.0",
+    "@digitalbazaar/http-client": "^2.0.0",
     "assert-plus": "^1.0.0",
     "base58-universal": "^1.0.0",
     "bnid": "^2.1.0",
@@ -37,7 +38,11 @@
     "dayjs": "^1.10.7",
     "esm": "^3.2.22",
     "flex-docstore": "^0.1.2",
+    "get-stdin": "^8.0.0",
     "glob": "^7.1.6",
+    "json-canonicalize": "^1.0.4",
+    "mime-types": "^2.1.34",
+    "multiformats": "^9.4.14",
     "yargs": "^17.0.1"
   },
   "engines": {
