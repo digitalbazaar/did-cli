@@ -290,6 +290,33 @@ a canonicalization algorithm):
 }
 ```
 
+From URL:
+
+```
+./did anchor create --url 'https://w3id.org/security/v1'
+{
+  "id": "https://w3id.org/security/v1",
+  "contentHash": "zQmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n",
+  "canonicalizationAlgorithm": "jcs"
+}
+# hashing an image
+./did anchor create --url 'https://via.placeholder.com/300.png'
+{
+  "id": "https://via.placeholder.com/300.png",
+  "contentHash": "zQmZAhmdLBtYKEwWe5zTXx2NL4oQPKtZdRAyXAm5ThAD3Kw"
+}
+```
+
+From `stdin`:
+```
+cat package.json | ./did anchor create
+{
+  "contentHash": "zQmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n",
+  "canonicalizationAlgorithm": "jcs"
+}
+```
+
+
 #### Verifying an `anchoredResource`
 
 ```
