@@ -161,24 +161,26 @@ ZCAP_CONTROLLER_KEY_SEED=$ADMIN_SECRET_KEY_SEED ./did zcap delegate \
       "https://w3id.org/zcap/v1",
       "https://w3id.org/security/suites/ed25519-2020/v1"
     ],
-    "id": "urn:zcap:delegated:z2b1MKTY1SaagJJRiqZdNWS",
+    "id": "urn:zcap:delegated:zATezxfPKbGAW5MermnA6N2",
     "parentCapability": "urn:zcap:root:https%3A%2F%2Fexample.com%2Fdocuments",
     "invocationTarget": "https://example.com/documents",
     "controller": "did:key:z6Mks9725jfFf4SVJh8cmUed2uC9ECAk7GvjYH8CysfdvGuM",
-    "expires": "2022-11-24T02:22:16Z",
-    "allowedAction": ["read"],
+    "expires": "2022-11-28T20:42:57Z",
+    "allowedAction": [
+      "read"
+    ],
     "proof": {
       "type": "Ed25519Signature2020",
-      "created": "2021-11-24T02:22:16Z",
+      "created": "2021-11-28T20:42:57Z",
       "verificationMethod": "did:key:z6Mkfeco2NSEPeFV3DkjNSabaCza1EoS3CmqLb1eJ5BriiaR#z6Mkfeco2NSEPeFV3DkjNSabaCza1EoS3CmqLb1eJ5BriiaR",
       "proofPurpose": "capabilityDelegation",
       "capabilityChain": [
         "urn:zcap:root:https%3A%2F%2Fexample.com%2Fdocuments"
       ],
-      "proofValue": "z3LmAKSE434jtJd1LgDtr4GRmcBhk3UDZVwpqSGtLySWL9uNWaiTJQ9T6eFyKgKs3VogXaCGF1ECtvDJiDpsgQYRv"
+      "proofValue": "z4jo2vxkF59G2wmdjQa412YEpYwjSbfZd5pee9NpLDsnKp81KiuL5bA9v4L4LbqmpFbxrndiY76HPHov9fZx977nf"
     }
   },
-  "encoded": "zWE9iCuaZNYTg5CA2HokbtjHcET3TnM7PDWgmYxmmT9zZqMM9cxPUJNi9URT3gbzSooPGKtevPix6saAE3TF6Zo44FGk6VK2pMpHHmdcQLjLDCaeXBv6KyPG6HkDiCu38UL1v66M9d88qUaYeC9Vr3gu3y6qMijzwyV3rG4b43HFkKCHENQeJ219617Xi6JNaGkTCXKiztGcwvSKUc4BcWZH7ZzZooa5rKG14a3FpJHjDK4eZuzXfnCD69JX2zYEqsMWKgbuRUU9wfXgS9QMP35tn86F928A2no1qFh6rmw92WJBNBYzaTmEreX2CpLtGFd5DMY1vh7JCXmWME9ha2E7mnRP6dGY7FWghVA22iQtQKsKNjy2JU9ox6YDNhjX3ZY4cHpgCDDpyh4ZDyrNZ1esdSZNkJzFQE1s9XAZumeRmjH3wazv2ipqhPjCKyhC9eomurLXmR5GnoP1cGByCtWWo8HRjqBWB4qv6hd221oKqpDWypDM7R7BbBiwT99ciEQYeTz5SvKvGVH5mWsZgCwnTpxvYPxwCiHbzVXWDkfCcP1yhG3NFPQSDR9sEkxPdzEaz73ufAhME8NFQLeUrPbjerrPCvSAxL9obofJEzxeCvghj9X4TXBRq5BHmsfTw8QYGVJG5px8nMtAT4ZgL7NuhW8oe7is6FXkppEXF9vrmMNkLj4jQb5M9uUBRXmwqFmu7vNHejmmQPMA425SQvdqmFiEf7UXSZ8kHfUy8gVHepay1NZwjZTEMshxP59zwaf6cqmajKWo475Jnsq5ByHK8AXUTffSMiEmngX2qMAhwZaVEgyjDDY6NientE9xZUykwDPXSK1QQKY2dJics7z5ySM1oqhb3oqmsrWP32absJtRFNGZNbqwpifVpGDMmk7VzifRvZPgeRe2dPvQDSQxULaXMUGzKu6UMQkBx32Y2PL7fKRj91rLS6GqEUdg8u5ZcNsWwX4sdZVDsrABthSjAE8jaLUuFsxG14tpJLc1MmQBM9gdPy6nH8vWjMZENg8n7zmNxnWWvaVXTnT3gSFY6QGTnTLwzbafGHrgD8N6B8D9eNUv1ZSZbEepGT8ZgRoKgEVFRBVPVzMQtLCqDCm8Dz"
+  "encoded": "zWE9iCuaZNYTg5CA2HokbtjHcET3TnM7PDWgmYxmmT9zZqMM9cxPUJNi9URT3gbzSooPGKtevPix6saAE3TF6Zo44FGk6VK2pMpHHmdcQLjLDCaeXBv6KyPG6HkDiCu38UL1v66M9d88qUaYeC9Vr3gu3y6qMijzwyWzpKkMd98Vhchybjes1kEh6BDmDpsD9SDkqaGxPc31SM7T19UaAaCy9Tyqg7Gpq9qjgwK2B37fARX1XN1rAgpJnr8SsctdYuC8BCwUaA9aSVhufokYePV7SLwdmAVBEXaAAKJFkeZitLs8PZr1QX3pDExYJBRsqF8g5w8tXCjeXweniPiofzbA3aycEzMzDGRAUEQV4mUjJp8R2PwLpuqVr8K7ExX2yr8kx9LbkPGvnLSVNHcgYuiZToSehdvi8R2cioecBB5HvtEgJB7EuEjoekmqnUHrvm8r7iiD1RsnZfC2uF2sMnuu3wtAVdzVJS9uDiEUhKEoCAf6peJqW3cgvhWpCsNkr2Ed2WVcG3k4wBxqdEC2rH69H55Ao7SoWjkeaKvNLNzF2hYFze8w7ABP9vL6MyqkW7imEa8uQytFNAn35kNYyAMJppRsZwD8aE6AspLkmdrgZBginJVxz5YdzgZHfy2KUasZFs2YU7BRAWoguuXdCoGfeMuAQhkbV5WLPnXVGyYLHJd3t8AmQMHXKT3aMxidN9LrcpYiU6gFP1bTSvFUVxD775CQ1NrNJsLUhSnWWAtM7EdJoEbWuthy2mwsV26sNXsEcjekxQQi5svrSDJdsQ6BX81Dduc4cZKRZxhmf5w7A6GxLvY5uLw3KCEZaRgL4Wi3X26bm78ywcosBQgBsb5YJyFBfz4rmLEZrx4wqbxMUWZE3h9K2rFgt3ysNoSCpEnuvaGyriULad1hg77MN5H9G2rodBjembitWwfgFCR7NSG5KpM4ZDBmoJQQ76CqD8oqqTADGfXVSbxr3tdtx1g6XzhQw4kTwPR16DeA7PUBCf3y9sqDnUmdt5cWk1kNsFDx54VZjnUasXzyZJ3aEiC5uXHWujgMGANN6s6tZFoT94KQAnFvEXhj5erYVYZBwqpSYBMZ5gB51orJXgXxzSHXba"
 }
 ```
 
