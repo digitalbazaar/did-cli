@@ -148,7 +148,7 @@ To delegate an authorization capability:
 ```sh
 export ADMIN_DID=did:key:z6Mkfeco2NSEPeFV3DkjNSabaCza1EoS3CmqLb1eJ5BriiaR
 export ADMIN_SECRET_KEY_SEED=z1AZK4h5w5YZkKYEgqtcFfvSbWQ3tZ3ZFgmLsXMZsTVoeK7
-export TEACHER_DID=did:key:z6Mks9725jfFf4SVJh8cmUed2uC9ECAk7GvjYH8CysfdvGuM
+export TEACHER_DID=did:key:z6MknBxrctS4KsfiBsEaXsfnrnfNYTvDjVpLYYUAN6PX2EfG
 
 ZCAP_CONTROLLER_KEY_SEED=$ADMIN_SECRET_KEY_SEED ./did zcap delegate \
   --delegatee $TEACHER_DID \
@@ -161,26 +161,66 @@ ZCAP_CONTROLLER_KEY_SEED=$ADMIN_SECRET_KEY_SEED ./did zcap delegate \
       "https://w3id.org/zcap/v1",
       "https://w3id.org/security/suites/ed25519-2020/v1"
     ],
-    "id": "urn:zcap:delegated:zATezxfPKbGAW5MermnA6N2",
+    "id": "urn:zcap:delegated:z9gLKoFmKHwhxCzmo91Ywnh",
     "parentCapability": "urn:zcap:root:https%3A%2F%2Fexample.com%2Fdocuments",
     "invocationTarget": "https://example.com/documents",
-    "controller": "did:key:z6Mks9725jfFf4SVJh8cmUed2uC9ECAk7GvjYH8CysfdvGuM",
-    "expires": "2022-11-28T20:42:57Z",
+    "controller": "did:key:z6MknBxrctS4KsfiBsEaXsfnrnfNYTvDjVpLYYUAN6PX2EfG",
+    "expires": "2022-11-28T20:53:06Z",
     "allowedAction": [
       "read"
     ],
     "proof": {
       "type": "Ed25519Signature2020",
-      "created": "2021-11-28T20:42:57Z",
+      "created": "2021-11-28T20:53:06Z",
       "verificationMethod": "did:key:z6Mkfeco2NSEPeFV3DkjNSabaCza1EoS3CmqLb1eJ5BriiaR#z6Mkfeco2NSEPeFV3DkjNSabaCza1EoS3CmqLb1eJ5BriiaR",
       "proofPurpose": "capabilityDelegation",
       "capabilityChain": [
         "urn:zcap:root:https%3A%2F%2Fexample.com%2Fdocuments"
       ],
-      "proofValue": "z4jo2vxkF59G2wmdjQa412YEpYwjSbfZd5pee9NpLDsnKp81KiuL5bA9v4L4LbqmpFbxrndiY76HPHov9fZx977nf"
+      "proofValue": "z244yxzRuFMyGfK85QcE6UewEZ3JpGDDTCvBKuxNiwdnxF3AmsSAoVYTBPLvFpYV7SeeWB4tUBGMGTF7pka6xR3av"
     }
   },
-  "encoded": "zWE9iCuaZNYTg5CA2HokbtjHcET3TnM7PDWgmYxmmT9zZqMM9cxPUJNi9URT3gbzSooPGKtevPix6saAE3TF6Zo44FGk6VK2pMpHHmdcQLjLDCaeXBv6KyPG6HkDiCu38UL1v66M9d88qUaYeC9Vr3gu3y6qMijzwyWzpKkMd98Vhchybjes1kEh6BDmDpsD9SDkqaGxPc31SM7T19UaAaCy9Tyqg7Gpq9qjgwK2B37fARX1XN1rAgpJnr8SsctdYuC8BCwUaA9aSVhufokYePV7SLwdmAVBEXaAAKJFkeZitLs8PZr1QX3pDExYJBRsqF8g5w8tXCjeXweniPiofzbA3aycEzMzDGRAUEQV4mUjJp8R2PwLpuqVr8K7ExX2yr8kx9LbkPGvnLSVNHcgYuiZToSehdvi8R2cioecBB5HvtEgJB7EuEjoekmqnUHrvm8r7iiD1RsnZfC2uF2sMnuu3wtAVdzVJS9uDiEUhKEoCAf6peJqW3cgvhWpCsNkr2Ed2WVcG3k4wBxqdEC2rH69H55Ao7SoWjkeaKvNLNzF2hYFze8w7ABP9vL6MyqkW7imEa8uQytFNAn35kNYyAMJppRsZwD8aE6AspLkmdrgZBginJVxz5YdzgZHfy2KUasZFs2YU7BRAWoguuXdCoGfeMuAQhkbV5WLPnXVGyYLHJd3t8AmQMHXKT3aMxidN9LrcpYiU6gFP1bTSvFUVxD775CQ1NrNJsLUhSnWWAtM7EdJoEbWuthy2mwsV26sNXsEcjekxQQi5svrSDJdsQ6BX81Dduc4cZKRZxhmf5w7A6GxLvY5uLw3KCEZaRgL4Wi3X26bm78ywcosBQgBsb5YJyFBfz4rmLEZrx4wqbxMUWZE3h9K2rFgt3ysNoSCpEnuvaGyriULad1hg77MN5H9G2rodBjembitWwfgFCR7NSG5KpM4ZDBmoJQQ76CqD8oqqTADGfXVSbxr3tdtx1g6XzhQw4kTwPR16DeA7PUBCf3y9sqDnUmdt5cWk1kNsFDx54VZjnUasXzyZJ3aEiC5uXHWujgMGANN6s6tZFoT94KQAnFvEXhj5erYVYZBwqpSYBMZ5gB51orJXgXxzSHXba"
+  "encoded": "zWE9iCuaZNYTg5CA2HokbtjHcET3TnM7PDWgmYxmmT9zZqMM9cxPUJNi9URT3gbzSooPGKtevPix6saAE3TF6Zo44FGk6VK2pMpHHmdcQLjLDCaeXBv6KyPG6HkDiCu38UL1v66M9d88qUaYeC9Vr3gu3y6qMijzwyVxuf6tdw5ieNN5fBhMTPAdiEjbwuKKRHnXC1jXaxvJgrL2FZANH8iEpBzSk2s5MFdz8so9yMwrG8py9Jk9PBoXQcWBGLET9E9iU3ckVJsev9KRUyfpEsDCa6jzqDTcxDL3VDg1QgXW4ZqzYytFeKKsM67EbCepLQvgdU83E4sMXyHiKtinaJfKgd4Z9shXPFwHdtDDhFrZ1vVrtBPWtMy8iUhUFfRFqHtKGTxESv24hC5Dt1FZcmX1fHoWGxytchUyjyWhZYE7QJtGKc3fQHGiecynzGppsGuiZHf6ZpybNUkkaMCE7mgJonZTUS1hTa3mPwwxT8xv72c9s4GzGdQK56A1tX6QaTNm4o9vwY4zGuqEzfa8kDE7ejyLm68AAodotr5bH2BuQGcJHrHF1xVDp6AcNWiKB1GgRafX9WXe4Xfz5RXk3uyQwCqMz7aAhUWN8HNx1ThqzbGuuHiU2fDn7KW87DkJftr58ddHT4WovaW8FzLG54V6D3yTEZzEoTLugoPC9hnfYgBHYbVgG8ydFxz3UN8wHYSYQN9XmVem7ZVtbauQasrajppzSMh7ow4U5X6pJ6qqZTd5kXykXoZT7HSAst5384oBThjLTQpmFHGSsXfcemGmkZyXSXKFRupLAbbQftQCBZ9njHXy3qRanerZTP789B8ua2YMQ2sa195iDqNnLHeeQqbspvMEe7TKk4r8km5zwAsaPh98HB3Wtky5goB39xvuD2botE5GBsEvMqhAAVGx8cY3pD9oZJE1zH64FP1Bho5UtbkHEfWHL7nZjbwo29sckrjAUCYbSTy4eA719GA3Rk7TjYe1LioJVBACNz4Uy3f49vdJ84uaUzf5E1bFHNgLopnjL2bPr47d8iN2mZ4RXdZorHLX6XuwsjcKeb8MwttyeMmsM61Znrs9PCAPqSSJJGvW8q1xDp46Fw3p4k7hac"
+}
+
+# Further delegation (a teacher can delegate the previous zCap to a student, 
+# for example)
+export TEACHER_DID=did:key:z6MknBxrctS4KsfiBsEaXsfnrnfNYTvDjVpLYYUAN6PX2EfG
+export TEACHER_SECRET_KEY_SEED=z1AWjKsCFB3kjcMVyuau6cg9bDeDTnKYnrkriGen6x3t7rF
+export STUDENT_DID=did:key:z6MksBBhHUrjje3rLoLdJozNo7y29vTBCLL3TUvKP7peEtgC
+
+ZCAP_CONTROLLER_KEY_SEED=$TEACHER_SECRET_KEY_SEED ./did zcap delegate \
+--delegatee $STUDENT_DID --invocationTarget 'https://example.com/documents/chemistry/101' \
+--controller $TEACHER_DID --allow read \
+--capability zWE9iCuaZNYTg5CA2HokbtjHcET3TnM7PDWgmYxmmT9zZqMM9cxPUJNi9URT3gbzSooPGKtevPix6saAE3TF6Zo44FGk6VK2pMpHHmdcQLjLDCaeXBv6KyPG6HkDiCu38UL1v66M9d88qUaYeC9Vr3gu3y6qMijzwyVxuf6tdw5ieNN5fBhMTPAdiEjbwuKKRHnXC1jXaxvJgrL2FZANH8iEpBzSk2s5MFdz8so9yMwrG8py9Jk9PBoXQcWBGLET9E9iU3ckVJsev9KRUyfpEsDCa6jzqDTcxDL3VDg1QgXW4ZqzYytFeKKsM67EbCepLQvgdU83E4sMXyHiKtinaJfKgd4Z9shXPFwHdtDDhFrZ1vVrtBPWtMy8iUhUFfRFqHtKGTxESv24hC5Dt1FZcmX1fHoWGxytchUyjyWhZYE7QJtGKc3fQHGiecynzGppsGuiZHf6ZpybNUkkaMCE7mgJonZTUS1hTa3mPwwxT8xv72c9s4GzGdQK56A1tX6QaTNm4o9vwY4zGuqEzfa8kDE7ejyLm68AAodotr5bH2BuQGcJHrHF1xVDp6AcNWiKB1GgRafX9WXe4Xfz5RXk3uyQwCqMz7aAhUWN8HNx1ThqzbGuuHiU2fDn7KW87DkJftr58ddHT4WovaW8FzLG54V6D3yTEZzEoTLugoPC9hnfYgBHYbVgG8ydFxz3UN8wHYSYQN9XmVem7ZVtbauQasrajppzSMh7ow4U5X6pJ6qqZTd5kXykXoZT7HSAst5384oBThjLTQpmFHGSsXfcemGmkZyXSXKFRupLAbbQftQCBZ9njHXy3qRanerZTP789B8ua2YMQ2sa195iDqNnLHeeQqbspvMEe7TKk4r8km5zwAsaPh98HB3Wtky5goB39xvuD2botE5GBsEvMqhAAVGx8cY3pD9oZJE1zH64FP1Bho5UtbkHEfWHL7nZjbwo29sckrjAUCYbSTy4eA719GA3Rk7TjYe1LioJVBACNz4Uy3f49vdJ84uaUzf5E1bFHNgLopnjL2bPr47d8iN2mZ4RXdZorHLX6XuwsjcKeb8MwttyeMmsM61Znrs9PCAPqSSJJGvW8q1xDp46Fw3p4k7hac
+
+{
+  "delegatedCapability": {
+    "@context": [
+      "https://w3id.org/zcap/v1",
+      "https://w3id.org/security/suites/ed25519-2020/v1"
+    ],
+    "id": "urn:zcap:delegated:zDdT5FfnQnpifMEJf8v3enk",
+    "parentCapability": "urn:zcap:delegated:z9gLKoFmKHwhxCzmo91Ywnh",
+    "invocationTarget": "https://example.com/documents/chemistry/101",
+    "controller": "did:key:z6MksBBhHUrjje3rLoLdJozNo7y29vTBCLL3TUvKP7peEtgC",
+    "expires": "2022-11-28T21:05:46Z",
+    "allowedAction": [
+      "read"
+    ],
+    "proof": {
+      "type": "Ed25519Signature2020",
+      "created": "2021-11-28T21:05:46Z",
+      "verificationMethod": "did:key:z6MknBxrctS4KsfiBsEaXsfnrnfNYTvDjVpLYYUAN6PX2EfG#z6MknBxrctS4KsfiBsEaXsfnrnfNYTvDjVpLYYUAN6PX2EfG",
+      "proofPurpose": "capabilityDelegation",
+      "capabilityChain": [
+        "urn:zcap:root:https%3A%2F%2Fexample.com%2Fdocuments",
+        "urn:zcap:delegated:z9gLKoFmKHwhxCzmo91Ywnh"
+      ],
+      "proofValue": "zzMhvR6puq3ma3HrVag9mvh2VQokogT9D54BaXB93J3TM8CDhMxk67FpfReJrNNeMEucndoxwB7pF9bM59qgPAqB"
+    }
+  },
+  "encoded": "zMtQjxpCzyxcmJD6SUpveQW5KsgvbnqNt3HN5VfSH1bPiusM4V5EFmdNaQRE9sPoyTM6uA15SPoBo1KEWfVkNxJDGqaKbRuVNX6fBY615x3miXLPXSmsM9Zk1bGZ9Bo29G4454qoLJ2J3xLE23aghr1Sq9QPrC9dP9JwveYyezkg4PoGzoeAcB1RfsULPmwCrzk5UKYoxEJ7vzTCsqWmsmGQuqZ8NBR9PxUV9LmeBS6npbudWmtRwRzu7RHs7upuvRR1Uy3QBa7AMuLWd8XazouZkbdZTCGkCjZEB8eoMneE6s6YRBrzAiFvDX9KAqCs2e11hrk36KPpqJvgku9hXoVhgEdjBmbTfUM8Sfrr4qSPhsjxUUASZXqvJaagdjyo2uPtYe1tqrF8u7JUA62MfBVsx6mHX8fV2DRHXpoykrrm6fkZL5eDHGsxutjnZKfx2bDECHFh5PeQxN9sZa6BZtrAUg7fd4SYHNm93t62uLxvc1SsHtmmzXoTepNMVTi9ytJJXogVpTCokG9t5f9UsLKbHQKaFG5xfZDDmRBsteJ1iSeX7Meukp8bzMzK6b8g7yckCPSTuoDkbBKx8kr3jEAFmv5JrggMK6dYSzFoKY16z5nHjXqdNSVKeSkt2g3xFGHKPVvcSFuv19vo5kuA66Tdab8ovo1ahqYmmtUCiYXtq7P2tPb33oZxirkR1JzkoSapTvYKGP9acpcnzyX99VxwqyzkM6T9WtHMbcM5jEe3nU2P2YuBU74gf7c9G82jkQ2wQc1koMw5ZvwqmxujEMw4ti3kp1LsUs5k2on9zyWqhwjHe367e6AJAqWHCr7JPEbXTwFvrUBN9WC1DokArQEZwfF8pkh4MfYXCCM87HyUSFGNPgmgAYyr3Jyv7YrbEWibwNQtCSddd9CAdkKjq2VBjF4AvGseoQdNQTFSVXiUowFji5kxRkZP8t5aTQKX3Jt9mDKQfT9xLn5kC8ZrRN6KvLf9easvHqkxSHQ7nEz9mYP6PAEBuR7K3dtBPStvFkZQEHuHRJndw8E4d5A4NJHsDgb5Gfm7kZR23oLTkwunP3iKh3nEqePe31UfCTBxb816kCmovsaQkY4CwGS39iGBAMxHHLtwLt9UvEZ841Uaax9yQqyvfvt16HNqAdUfTS652a7DmsngK1e1uTMPi2ftc45Qp"
 }
 ```
 
