@@ -284,9 +284,13 @@ a canonicalization algorithm):
 ```
 ./did anchor create -f example-vc.json --canonicalize jcs
 {
-  "id": "<id of the object in example-vc.json>",
-  "canonicalizationAlgorithm": "jcs",
-  "contentHash": "z1Aaj5A4UCsdMpXwdYAReXa4bxWYiKJtdAvB1zMzCHtCbtD"
+  "anchoredResource": {
+    "id": "<id of the object in example-vc.json>",
+    "contentHash": {
+      "digestValue": "z1Aaj5A4UCsdMpXwdYAReXa4bxWYiKJtdAvB1zMzCHtCbtD",
+      "canonicalizationAlgorithm": "jcs"
+    }
+  }
 }
 ```
 
@@ -295,15 +299,24 @@ From URL:
 ```
 ./did anchor create --url 'https://w3id.org/security/v1'
 {
-  "id": "https://w3id.org/security/v1",
-  "contentHash": "zQmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n",
-  "canonicalizationAlgorithm": "jcs"
+  "anchoredResource": {
+    "id": "https://w3id.org/security/v1",
+    "contentHash": {
+      "digestValue": "zQmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n",
+      "canonicalizationAlgorithm": "jcs"
+    }
+  }
 }
+
 # hashing an image
 ./did anchor create --url 'https://via.placeholder.com/300.png'
 {
-  "id": "https://via.placeholder.com/300.png",
-  "contentHash": "zQmZAhmdLBtYKEwWe5zTXx2NL4oQPKtZdRAyXAm5ThAD3Kw"
+  "anchoredResource": {
+    "id": "https://via.placeholder.com/300.png",
+    "contentHash": {
+      "digestValue": "zQmZAhmdLBtYKEwWe5zTXx2NL4oQPKtZdRAyXAm5ThAD3Kw"
+    }
+  }
 }
 ```
 
@@ -311,8 +324,12 @@ From `stdin`:
 ```
 cat package.json | ./did anchor create
 {
-  "contentHash": "zQmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n",
-  "canonicalizationAlgorithm": "jcs"
+  "anchoredResource": {
+    "contentHash": {
+      "digestValue": "zQmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n",
+      "canonicalizationAlgorithm": "jcs"
+    }
+  }
 }
 ```
 
