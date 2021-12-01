@@ -287,7 +287,7 @@ a canonicalization algorithm):
   "anchoredResource": {
     "id": "<id of the object in example-vc.json>",
     "contentHash": {
-      "digestValue": "z1Aaj5A4UCsdMpXwdYAReXa4bxWYiKJtdAvB1zMzCHtCbtD",
+      "digestMultibase": "zQmZAhmdLBtYKEwWe5zTXx2NL4oQPKtZdRAyXAm5ThAD3Kw"
       "canonicalizationAlgorithm": "jcs"
     }
   }
@@ -302,7 +302,7 @@ From URL:
   "anchoredResource": {
     "id": "https://w3id.org/security/v1",
     "contentHash": {
-      "digestValue": "zQmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n",
+      "digestMultibase": "zQmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n",
       "canonicalizationAlgorithm": "jcs"
     }
   }
@@ -314,7 +314,7 @@ From URL:
   "anchoredResource": {
     "id": "https://via.placeholder.com/300.png",
     "contentHash": {
-      "digestValue": "zQmZAhmdLBtYKEwWe5zTXx2NL4oQPKtZdRAyXAm5ThAD3Kw"
+      "digestMultibase": "zQmZAhmdLBtYKEwWe5zTXx2NL4oQPKtZdRAyXAm5ThAD3Kw"
     }
   }
 }
@@ -326,13 +326,12 @@ cat package.json | ./did anchor create
 {
   "anchoredResource": {
     "contentHash": {
-      "digestValue": "zQmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n",
+      "digestMultibase": "zQmdfTbBqBPQ7VNxZEYEj14VmRuZBkqFbiwReogJgS1zR1n",
       "canonicalizationAlgorithm": "jcs"
     }
   }
 }
 ```
-
 
 #### Verifying an `anchoredResource`
 
