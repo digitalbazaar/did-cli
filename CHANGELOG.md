@@ -5,6 +5,9 @@
 ### Changed
 - **BREAKING**: Rewrite.
 
+### Added
+- Add support for generating and storing `did:web` DIDs.
+
 ## 0.6.0 - 2020-04-08
 
 ### Changed

@@ -13,12 +13,22 @@
 
 ## Background
 
-By default, keys and DID Documents will be stored in `~/.dids/<method>/`,
-see [Setting Up Storage](STORAGE.md) for more details.
+### Features
 
-Relevant Specifications:
+* Create and store Ed25519 cryptographic key pairs (useful for DIDs, VCs, zCaps and more).
+* Generate secret key seeds (for easier storage and management).
+* Create and store [Decentralized Identifiers (DIDs) v1.0](https://www.w3.org/TR/did-core/).
+  Supported DID methods:
+  - `did:key`
+  - [`did:web`](https://w3c-ccg.github.io/did-method-web/)
+  - Coming Soon: Veres One `did:v` (`capybara` testnet)
+* Generate Anchored Resources (hashlinks)
+* Generate and delegate Authorization Capabilities (zCaps)
 
-* [Decentralized Identifiers (DIDs) v1.0](https://www.w3.org/TR/did-core/)
+### File System Backed Wallet Included
+
+Just as your SSH keys are typically stored in your `~/.ssh/` folder, `did-cli`
+stores your keys and DID Documents in `~/.wallet/` (by default).
 
 ## Install
 
@@ -47,14 +57,32 @@ Help is available with the `--help/-h` command line option:
 ./did COMMAND -h
 ```
 
+### Storage / Wallet Commands
+
+Add a `--save` argument to any `generate/create` command, to save the created
+object (key pair, DID Document, zCap, etc) to your local file-based storage
+(stored in `~/.wallet/` folder).
+
+For example, to generate a new `did:web` DID Document (and corresponding key pairs),
+and save it locally:
+
+```
+./did id generate --method web --save
+```
+
 ### Decentralized Identifiers (DIDs)
 
-#### `did:key` Method - Create
+#### `did:key` Method
 
 To generate a new `did:key` DID:
 
 ```
-./did id create --method <method>
+./did id create
+```
+or
+
+```
+./did id generate
 ```
 
 Options:
@@ -64,7 +92,7 @@ Options:
 Examples:
 
 ```
-./did id create
+./did id generate
 {
   "id": "did:key:z6Mkfeco2NSEPeFV3DkjNSabaCza1EoS3CmqLb1eJ5BriiaR",
   "secretKeySeed": "z1AZK4h5w5YZkKYEgqtcFfvSbWQ3tZ3ZFgmLsXMZsTVoeK7",
@@ -111,16 +139,72 @@ If you have a secret key seed already, set the `SECRET_KEY_SEED` env variable,
 and the DID will be deterministically generated from it:
 
 ```
-SECRET_KEY_SEED=z1AZK4h5w5YZkKYEgqtcFfvSbWQ3tZ3ZFgmLsXMZsTVoeK7 ./did id create
+SECRET_KEY_SEED=z1AZK4h5w5YZkKYEgqtcFfvSbWQ3tZ3ZFgmLsXMZsTVoeK7 ./did id generate
 // same as previous example
 ```
 
+#### `did:web` Method
+
+To create a new [`did:web`](https://w3c-ccg.github.io/did-method-web/) DID 
+Document that is intended to live at `https://example.com/.well-known/did.json`:
+
+```
+./did id generate --method web --url https://example.com
+{
+  "id": "did:web:example.com",
+  "didDocument": {
+    "@context": [
+      "https://www.w3.org/ns/did/v1",
+      "https://w3id.org/security/suites/ed25519-2020/v1",
+      "https://w3id.org/security/suites/x25519-2020/v1"
+    ],
+    "id": "did:web:example.com",
+    "assertionMethod": [
+      {
+        "id": "did:web:example.com#z6Mkmu3vV9Ncct2Y7Pfuf6s2uUkKmhPkzFttVbeD2HsfrtGp",
+        "type": "Ed25519VerificationKey2020",
+        "controller": "did:web:example.com",
+        "publicKeyMultibase": "z6Mkmu3vV9Ncct2Y7Pfuf6s2uUkKmhPkzFttVbeD2HsfrtGp"
+      }
+    ]
+  }
+}
+```
+
+Note that by default, only one key pair is generated as part of DID Document
+creation, and is assigned to the `assertionMethod` verification relationship.
+
+To add authorization for additional key usage (for example, to add an `authentication`
+section), the easiest way currently is to edit the DID Doc manually. For example,
+you can edit the initial DID Document generated above, and add support for 
+`authentication` to the same key that's used for signing VCs (`assertionMethod`).
+
+```
+{
+    "@context": [
+      "https://www.w3.org/ns/did/v1",
+      "https://w3id.org/security/suites/ed25519-2020/v1",
+      "https://w3id.org/security/suites/x25519-2020/v1"
+    ],
+    "id": "did:web:example.com",
+    "assertionMethod": [
+      {
+        "id": "did:web:example.com#z6Mkmu3vV9Ncct2Y7Pfuf6s2uUkKmhPkzFttVbeD2HsfrtGp",
+        "type": "Ed25519VerificationKey2020",
+        "controller": "did:web:example.com",
+        "publicKeyMultibase": "z6Mkmu3vV9Ncct2Y7Pfuf6s2uUkKmhPkzFttVbeD2HsfrtGp"
+      }
+    ],
+    "authentication": [
+      "did:web:example.com#z6Mkmu3vV9Ncct2Y7Pfuf6s2uUkKmhPkzFttVbeD2HsfrtGp",
+    ]
+}
+```
 ### zCaps (Authorization Capabilities)
 
 #### Creating a Root zCap
 
-To create a root zcap that allows `read` and `write` actions to the 
-`https://example.com/api` URL:
+To create a root zcap that allows all actions to for the `https://example.com/api` URL:
 
 ```
 ZCAP_CONTROLLER_KEY_SEED=z1AZK4h5w5YZkKYEgqtcFfvSbWQ3tZ3ZFgmLsXMZsTVoeK7 \
@@ -140,6 +224,9 @@ ZCAP_CONTROLLER_KEY_SEED=z1AZK4h5w5YZkKYEgqtcFfvSbWQ3tZ3ZFgmLsXMZsTVoeK7 \
   "encoded": "zDWWVahKWhXpe9vYhuSeaRYDZradgnuhfJUnQGAGdbsXRPbD16AsJq6no2b9iHjZGqRfKSWRz9gGer1uJfwG5awKshKhWVuBK5fRJTwN54G4MRAhbMJsUKvwC1VYto5gkNEcoNqvFWNSgucumD4vzarDfDfyXG6BXFbk2SN314p5vgPPEkxkWkqyWdMcWAoFDJcYFK5WGdwKxs2xsZazJgPk8aJrtPRKvSVVQUb2i5qLguZn21JNuk6sNrC4SPhcskkbsEEctMzpxVr75qLX9zWGEaJwgCdZDPGwS4YKuvgHbRW6jU7wVUoTcFNSzevhK3hAswXDzNZp7kmAxJMZBtaBhoeTV9tG75DX1ek"
 }
 ```
+
+Note that root capabilities do not have an `allowedAction` property -- all actions
+are allowed for root zcaps.
 
 #### Delegating a zCap
 
